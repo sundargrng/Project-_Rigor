@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
+
 
 public class KnightMoement : MonoBehaviour
 {
@@ -8,27 +10,58 @@ public class KnightMoement : MonoBehaviour
 
     public Rigidbody2D rb;
 
-    public Animator animator;
+    private Animator animator;
 
-    Vector2 movement;
+    private Vector2 input;
 
-    // Update is called once per frame
-    void Update()
+    private Vector2 lastMoveDirection;
+
+    // Start is called before the first frame update
+    void Start()
     {
-        // Input
-
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
-
-        animator.SetFloat("Horizontal", movement.x);
-        animator.SetFloat("Vertical", movement.y);
-        animator.SetFloat("Speed", movement.sqrMagnitude);
+        animator = GetComponent<Animator>();
     }
 
-    void FixedUpdate()
-    {
-        // Movement
 
-        rb.MovePosition(rb.position +  movement * moveSpeed * Time.fixedDeltaTime);
+    // Update is called once per frame - used for Inputs and Timers
+    void Update()
+    {
+        ProcessInputs();
+        Animate();
+    }
+
+
+    // Called once per Physics frame used for physics
+    private void FixedUpdate()
+    {
+        rb.velocity = input * moveSpeed;
+    }
+
+
+    void ProcessInputs()
+    {
+        // Store last move direction when we stop moving
+        float moveX = UnityEngine.Input.GetAxisRaw("Horizontal");
+        float moveY = UnityEngine.Input.GetAxisRaw("Vertical");
+
+        if ((moveX == 0 && moveY == 0) && (input.x != 0 || input.y != 0))
+        {
+            lastMoveDirection = input;
+        }
+
+        input.x = UnityEngine.Input.GetAxisRaw("Horizontal");
+        input.y = UnityEngine.Input.GetAxisRaw("Vertical");
+    }
+
+
+
+    void Animate()
+    {
+        // set our animator parameters
+        animator.SetFloat("MoveX", input.x);
+        animator.SetFloat("MoveY", input.y);
+        animator.SetFloat("MoveMagnitude", input.magnitude);
+        animator.SetFloat("LastMoveX", lastMoveDirection.x);
+        animator.SetFloat("LastMoveY", lastMoveDirection.y);
     }
 }
