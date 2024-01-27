@@ -16,6 +16,9 @@ public class KnightMoement : MonoBehaviour
 
     private Vector2 lastMoveDirection;
 
+    private float attackTime = 0.25f;
+    private float attackCounter = 0.25f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +54,23 @@ public class KnightMoement : MonoBehaviour
 
         input.x = UnityEngine.Input.GetAxisRaw("Horizontal");
         input.y = UnityEngine.Input.GetAxisRaw("Vertical");
+
+
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.velocity = Vector2.zero;
+            attackCounter = attackTime;
+            animator.SetBool("normalAttack", true);
+        }
+
+        if (attackCounter > 0)
+        {
+            attackCounter -= Time.deltaTime;
+            if (attackCounter <= 0)
+            {
+                animator.SetBool("normalAttack", false);
+            }
+        }
     }
 
 
@@ -63,6 +83,7 @@ public class KnightMoement : MonoBehaviour
         animator.SetFloat("MoveMagnitude", input.magnitude);
         animator.SetFloat("LastMoveX", lastMoveDirection.x);
         animator.SetFloat("LastMoveY", lastMoveDirection.y);
+
     }
 
 
