@@ -64,4 +64,16 @@ public class KnightMoement : MonoBehaviour
         animator.SetFloat("LastMoveX", lastMoveDirection.x);
         animator.SetFloat("LastMoveY", lastMoveDirection.y);
     }
+
+
+ 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Check if the object we collided with has the "Base" tag 
+        if (collision.gameObject.CompareTag("Base"))
+        {
+            // Set the velocity of the rigidbody to zero to stop the knight from moving
+            rb.velocity = Vector2.zero;
+        }
+    }
 }
