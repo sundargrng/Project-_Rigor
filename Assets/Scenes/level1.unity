@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 236218493}
   - component: {fileID: 236218497}
   - component: {fileID: 236218498}
+  - component: {fileID: 236218499}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -203,7 +204,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.009543404, y: -0.44848084}
+  m_Offset: {x: 0.009543404, y: -0.02519679}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -214,7 +215,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.37321666, y: 0.18967867}
+  m_Size: {x: 0.37321666, y: 1.0362468}
   m_EdgeRadius: 0
 --- !u!212 &236218495
 SpriteRenderer:
@@ -320,6 +321,18 @@ MonoBehaviour:
   speed: 1.5
   maxRange: 4
   minRange: 0.5
+--- !u!114 &236218499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236218492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eae8716947f44b34895cc90766f21db7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &509934340
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,7 +349,7 @@ GameObject:
   - component: {fileID: 509934346}
   m_Layer: 0
   m_Name: Warrior
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -501,7 +514,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0036275983, y: -0.41811043}
+  m_Offset: {x: -0.023271069, y: -0.16765684}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -512,7 +525,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3623392, y: 0.11354089}
+  m_Size: {x: 0.42126933, y: 0.6144481}
   m_EdgeRadius: 0
 --- !u!1 &585787475
 GameObject:
