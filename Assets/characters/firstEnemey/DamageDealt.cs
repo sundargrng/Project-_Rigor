@@ -19,7 +19,7 @@ public class DamageDealt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthManager = FindAnyObjectByType<HealthManager>();
+        healthManager = FindObjectOfType<HealthManager>();
     }
 
     // Update is called once per frame

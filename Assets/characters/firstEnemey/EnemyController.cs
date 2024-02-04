@@ -26,7 +26,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         // the enemy will look for the object with WarriorController script attached in its component.
-        target = FindAnyObjectByType<WarriorController>().transform;
+        target = FindObjectOfType<WarriorController>().transform;
     }
 
     // Update is called once per frame
