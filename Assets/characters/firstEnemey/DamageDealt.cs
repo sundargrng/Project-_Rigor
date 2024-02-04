@@ -10,8 +10,8 @@ public class DamageDealt : MonoBehaviour
     //private float loadingTime = 2f;
     //private bool gameOver;
 
-    private float waitToDamage = 2f;
-    private bool isAttacking;
+    public float waitToDamage = 2f;
+    public bool isAttacking;
 
     [SerializeField]
     private int damageDiff; // damage dealt by different enemies differs
@@ -62,8 +62,22 @@ public class DamageDealt : MonoBehaviour
 
 
     // as long as the enemy is attacking us
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D other)
     {
-        isAttacking = true;
+        if(other.collider.tag == "Player")
+        {
+            isAttacking = true;
+        }
+    }
+
+
+    // when no longer colliding with enemy or enemy no longer attacking us
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.collider.tag == "Player")
+        {
+            isAttacking = false;
+            waitToDamage = 2f;
+        }
     }
 }
