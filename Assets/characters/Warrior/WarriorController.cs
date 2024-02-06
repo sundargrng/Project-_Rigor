@@ -12,6 +12,10 @@ public class WarriorController : MonoBehaviour
     [SerializeField]
     private float speed;
 
+    private float attackTime = 0.25f;
+    private float attackCountDOwn = 0.25f;
+    private bool isAttacking;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +36,24 @@ public class WarriorController : MonoBehaviour
         {
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+        }
+
+        if (isAttacking)
+        {
+            rb.velocity = Vector2.zero;
+            attackCountDOwn -= Time.deltaTime;
+            if (attackCountDOwn <= 0)
+            {
+                animator.SetBool("isAttacking", false);
+                isAttacking = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            attackCountDOwn = attackTime;
+            animator.SetBool("isAttacking", true);
+            isAttacking = true;
         }
     }
 
