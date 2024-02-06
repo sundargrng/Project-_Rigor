@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class FirstEnemyController : MonoBehaviour
 {
 
     private Animator animator; // reference to animator for firstEnemy

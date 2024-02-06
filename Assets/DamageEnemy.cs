@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DamageEnemy : MonoBehaviour
 {
+    public int damageTaken = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,9 @@ public class DamageEnemy : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            Destroy(other.gameObject);
+            EnemyHealthManager eHealthMan;
+            eHealthMan = other.gameObject.GetComponent<EnemyHealthManager>();
+            eHealthMan.damageEnemy(damageTaken);
         }
     }
 }
