@@ -11,7 +11,7 @@ public class DamageDealt : MonoBehaviour
     //private bool gameOver;
 
     public float waitToDamage = 2f;
-    public bool isAttacking;
+    public bool isDamaging;
 
     [SerializeField]
     private int damageDiff; // damage dealt by different enemies differs
@@ -36,7 +36,7 @@ public class DamageDealt : MonoBehaviour
         }*/
 
 
-        if(isAttacking)
+        /*if(isDamaging)
         {
             waitToDamage -= Time.deltaTime;
             if(waitToDamage <= 0 ) 
@@ -44,40 +44,28 @@ public class DamageDealt : MonoBehaviour
                 healthManager.damagePlayer(damageDiff);
                 waitToDamage = 2f;
             }
+        }*/
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Access the player's HealthManager and apply damage
+            HealthManager playerHealth = other.GetComponent<HealthManager>();
+            if (playerHealth != null)
+            {
+                playerHealth.damagePlayer(damageDiff);
+
+            }
         }
     }
 
-
-    // as soon as we collide with the enemy
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.collider.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            //other.gameObject.SetActive(false);
-
-            other.gameObject.GetComponent<HealthManager>().damagePlayer(damageDiff);
-            //gameOver = true;
-        }
-    }
-
-
-    // as long as the enemy is attacking us
-    private void OnCollisionStay2D(Collision2D other)
-    {
-        if(other.collider.tag == "Player")
-        {
-            isAttacking = true;
-        }
-    }
-
-
-    // when no longer colliding with enemy or enemy no longer attacking us
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if(other.collider.tag == "Player")
-        {
-            isAttacking = false;
-            waitToDamage = 2f;
+            isDamaging = false;
         }
     }
 }

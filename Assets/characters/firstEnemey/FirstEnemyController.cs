@@ -20,6 +20,8 @@ public class FirstEnemyController : MonoBehaviour
     [SerializeField]
     private float minRange;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,9 +34,14 @@ public class FirstEnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) >= minRange)
+        if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) > minRange)
         {
             followPlayer();
+            noAttackPlayer();
+        }
+        else if (Vector3.Distance(target.position, transform.position) < minRange)
+        {
+            attackPlayer();
         }
         else if(Vector3.Distance(target.position, transform.position)>= maxRange)
         {
@@ -53,6 +60,27 @@ public class FirstEnemyController : MonoBehaviour
         animator.SetFloat("moveY", (target.position.y - transform.position.y));
 
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+    }
+
+    public void attackPlayer() {
+
+        animator.SetBool("isDamaging", true);
+
+        
+        animator.SetFloat("X", (target.position.x - transform.position.x));
+        animator.SetFloat("Y", (target.position.y - transform.position.y));
+
+        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+    }
+
+    public void noAttackPlayer()
+    {
+        animator.SetBool("isDamaging", false);
+
+        animator.SetFloat("moveX", (target.position.x - transform.position.x));
+        animator.SetFloat("moveY", (target.position.y - transform.position.y));
+
+      
     }
 
 
