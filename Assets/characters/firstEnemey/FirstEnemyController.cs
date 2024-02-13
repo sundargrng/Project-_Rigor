@@ -34,12 +34,12 @@ public class FirstEnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) > minRange)
+        if (Vector3.Distance(target.position, transform.position) < maxRange && Vector3.Distance(target.position, transform.position) > minRange)
         {
             followPlayer();
             noAttackPlayer();
         }
-        else if (Vector3.Distance(target.position, transform.position) < minRange)
+        else if (Vector3.Distance(target.position, transform.position) <= minRange)
         {
             attackPlayer();
         }
