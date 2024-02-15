@@ -27,6 +27,11 @@ public class WarriorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DialogManager.isActive == true)
+        {
+            return;
+        }
+
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
 
         animator.SetFloat("moveX", rb.velocity.x);
@@ -49,7 +54,7 @@ public class WarriorController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) || (Input.GetMouseButtonDown(0)) )
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) 
         {
             attackCountDOwn = attackTime;
             animator.SetBool("isAttacking", true);
