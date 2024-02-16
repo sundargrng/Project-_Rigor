@@ -61,11 +61,11 @@ public class DamageDealt : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    /*private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             isDamaging = false;
         }
-    }
+    }*/
 }

@@ -96,12 +96,21 @@ public class FirstEnemyController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    /*private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "KnockBack")
         {
             Vector2 difference = transform.position - other.transform.position;
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
+        }
+    }*/
+
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "ColliderObjects")
+        {
+            target = FindObjectOfType<WarriorController>().transform;
         }
     }
 }

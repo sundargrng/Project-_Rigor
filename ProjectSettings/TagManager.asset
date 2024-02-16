@@ -7,6 +7,9 @@ TagManager:
   - Base
   - Enemy
   - NPC
+  - CooliderObjects
+  - KnockBack
+  - PlayerKB
   layers:
   - Default
   - TransparentFX
