@@ -26,5 +26,13 @@ public class DamageEnemy : MonoBehaviour
             eHealthMan = other.gameObject.GetComponent<EnemyHealthManager>();
             eHealthMan.damageEnemy(damageTaken);
         }
+
+        if (other.tag == "arrow")
+        {
+            Destroy(other.gameObject);
+        }
     }
+
+
+    
 }

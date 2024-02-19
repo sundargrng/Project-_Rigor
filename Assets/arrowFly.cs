@@ -33,8 +33,20 @@ public class arrowFly : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<HealthManager>().currentHealth -= arrowDamage;
-            Destroy(this.gameObject);
+            HealthManager playerHealth = other.GetComponent<HealthManager>();
+            if (playerHealth != null)
+            {
+                playerHealth.currentHealth -= arrowDamage;
+                Destroy(this.gameObject);
+            }
+            
+
+            if (playerHealth.currentHealth == 0)
+            {
+                other.gameObject.SetActive(false);
+            }
         }
+
+
     }
 }
