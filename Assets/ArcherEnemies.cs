@@ -18,6 +18,8 @@ public class ArcherEnemies : MonoBehaviour
 
     private Animator animator;
 
+    public Transform homePosition;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,6 +37,9 @@ public class ArcherEnemies : MonoBehaviour
 
         if (distanceFromPlayer < lineOfSite && distanceFromPlayer>attackRange)
         {
+            animator.SetBool("inRange", true);
+            animator.SetFloat("walkX", (player.position.x - this.transform.position.x));
+            animator.SetFloat("walkY", (player.position.y - this.transform.position.y));
             transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
         }
 
@@ -52,9 +57,34 @@ public class ArcherEnemies : MonoBehaviour
         }
 
 
-        if (distanceFromPlayer > attackRange)
+        if (distanceFromPlayer > attackRange && distanceFromPlayer<lineOfSite)
         {
             animator.SetBool("inAttackRange", false);
+            animator.SetFloat("walkX", (player.position.x - this.transform.position.x));
+            animator.SetFloat("walkY", (player.position.y - this.transform.position.y));
+            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
+        }
+
+        if (distanceFromPlayer > lineOfSite)
+        {
+            animator.SetBool("inAttackRange", false);
+            animator.SetFloat("walkX", (homePosition.position.x - this.transform.position.x));
+            animator.SetFloat("walkY", (homePosition.position.y - this.transform.position.y));
+            transform.position = Vector2.MoveTowards(this.transform.position, homePosition.position, speed * Time.deltaTime);
+
+            if (Vector2.Distance(this.transform.position, homePosition.position)==0 )
+            {
+                animator.SetBool("inRange", false);
+                
+            }
+
+            /*if (Vector2.Distance(transform.position, homePosition.position) != 0)
+            {
+
+                animator.SetFloat("walkX", (homePosition.position.x - this.transform.position.x));
+                animator.SetFloat("walkY", (homePosition.position.y - this.transform.position.y));
+                transform.position = Vector2.MoveTowards(this.transform.position, homePosition.position, speed * Time.deltaTime);
+            }*/
         }
     }
 
