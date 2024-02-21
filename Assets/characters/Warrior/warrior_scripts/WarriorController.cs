@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -12,9 +13,21 @@ public class WarriorController : MonoBehaviour
     [SerializeField]
     private float speed;
 
-    private float attackTime = 0.25f;
-    private float attackCountDOwn = 0.25f;
+    private float attackTime = 0.5f;
+    private float attackCountDOwn;
     private bool isAttacking;
+
+    public GameObject AttackPointUP;
+    public GameObject AttackPointLeft;
+    public GameObject AttackPointRight;
+    public GameObject AttackPointDown;
+
+    public float AttackPointRadius;
+    public LayerMask enemies;
+
+    public int playerDamage;
+
+   
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +60,7 @@ public class WarriorController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             attackCountDOwn -= Time.deltaTime;
-            if (attackCountDOwn <= 0)
+            if (attackCountDOwn < 0)
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
@@ -62,13 +75,68 @@ public class WarriorController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+
+    public void attackUP()
+    {
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointUP.transform.position, AttackPointRadius, enemies);
+
+        foreach (Collider2D enemyGameBoject in enemy)
+        {
+            Debug.Log("Enemy is Hit");
+            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+        }
+    }
+
+    public void attackDown()
+    {
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointDown.transform.position, AttackPointRadius, enemies);
+
+        foreach (Collider2D enemyGameBoject in enemy)
+        {
+            Debug.Log("Enemy is Hit");
+            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+        }
+    }
+
+    public void attackLeft()
+    {
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointLeft.transform.position, AttackPointRadius, enemies);
+
+        foreach (Collider2D enemyGameBoject in enemy)
+        {
+            Debug.Log("Enemy is Hit");
+            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+        }
+    }
+
+    public void attackRight()
+    {
+        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointRight.transform.position, AttackPointRadius, enemies);
+
+        foreach (Collider2D enemyGameBoject in enemy)
+        {
+            Debug.Log("Enemy is Hit");
+            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+        }
+    }
+
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(AttackPointUP.transform.position, AttackPointRadius);
+        Gizmos.DrawWireSphere(AttackPointLeft.transform.position, AttackPointRadius);
+        Gizmos.DrawWireSphere(AttackPointRight.transform.position, AttackPointRadius);
+        Gizmos.DrawWireSphere(AttackPointDown.transform.position, AttackPointRadius);
+    }
+
+    /*private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "PlayerKB")
         {
             Vector2 difference = transform.position - other.transform.position;
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
         }
-    }
+    }*/
 
 }

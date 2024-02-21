@@ -17,15 +17,15 @@ public class DamageEnemy : MonoBehaviour
         
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Enemy")
+        /*if (other.tag == "Enemy")
         {
             EnemyHealthManager eHealthMan;
             eHealthMan = other.gameObject.GetComponent<EnemyHealthManager>();
             eHealthMan.damageEnemy(damageTaken);
-        }
+            
+        }*/
 
         if (other.tag == "arrow")
         {
@@ -34,5 +34,5 @@ public class DamageEnemy : MonoBehaviour
     }
 
 
-    
+
 }

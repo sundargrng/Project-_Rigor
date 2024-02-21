@@ -9,60 +9,62 @@ public class EnemyHealthManager : MonoBehaviour
 
     private bool hurtFlash;
 
-    [SerializeField]
-    private float flashTime = 0f;
+    private float flashDuration = 0.1f;
     private float flashCountDown = 0f;
 
     private SpriteRenderer enemySprite;
+
+
+    private bool isFlashing;
     // Start is called before the first frame update
     void Start()
     {
         enemySprite = GetComponent<SpriteRenderer>();
+        
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (hurtFlash)
+        if (isFlashing)
         {
-            if (flashCountDown > flashTime * .99f)
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 0f);
-            }
-            else if (flashCountDown > flashTime * .75f)
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 1f);
-            }
-            else if (flashCountDown > flashTime * .50f)
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 0f);
-            }
-            else if (flashCountDown > flashTime * .25f)
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 1f);
-            }
-            else if (flashCountDown > 0f)
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 0f);
-            }
-            else
-            {
-                enemySprite.color = new Color(enemySprite.color.r, enemySprite.color.g, enemySprite.color.b, 1f);
-                hurtFlash = false;
-            }
-            flashCountDown -= Time.deltaTime;
+            FlashRed();
         }
+
+
+
     }
 
-    public void damageEnemy(int damageTaken)
+
+    public void TakeDamage(int damage)
     {
-        currentHealth -= damageTaken;
-        hurtFlash = true;
-        flashCountDown = flashTime;
+        currentHealth -= damage;
+        isFlashing = true;
+        flashCountDown = flashDuration;
 
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
+    }
+
+    private void FlashRed()
+    {
+        if (flashCountDown > 0f)
+        {
+            enemySprite.color = new Color(1f, 0f, 0f, 1f); // Set the sprite color to red
+            flashCountDown -= Time.deltaTime;
+        }
+        else
+        {
+            enemySprite.color = new Color(1f, 1f, 1f, 1f); // Set the sprite color back to white
+            isFlashing = false;
+        }
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

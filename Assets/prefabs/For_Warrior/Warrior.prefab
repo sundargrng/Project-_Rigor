@@ -379,6 +379,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 150
+  AttackPointUP: {fileID: 0}
+  AttackPointLeft: {fileID: 0}
+  AttackPointRight: {fileID: 0}
+  AttackPointDown: {fileID: 0}
+  AttackPointRadius: 0
+  enemies:
+    serializedVersion: 2
+    m_Bits: 0
+  playerDamage: 0
 --- !u!50 &4377305904480634644
 Rigidbody2D:
   serializedVersion: 4
