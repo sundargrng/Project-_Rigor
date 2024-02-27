@@ -34,6 +34,7 @@ public class arrowFly : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             HealthManager playerHealth = other.GetComponent<HealthManager>();
+
             if (playerHealth != null)
             {
                 playerHealth.currentHealth -= arrowDamage;
@@ -49,4 +50,7 @@ public class arrowFly : MonoBehaviour
 
 
     }
+
+
+     
 }

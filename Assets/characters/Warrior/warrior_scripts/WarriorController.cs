@@ -27,7 +27,7 @@ public class WarriorController : MonoBehaviour
 
     public int playerDamage;
 
-   
+    
 
     // Start is called before the first frame update
     void Start()
@@ -40,10 +40,17 @@ public class WarriorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       if(AreaTransitions.inputDisable == true)
+        {
+            return;
+        }
+
         if (DialogManager.isActive == true)
         {
             return;
         }
+
+        
 
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
 
@@ -80,10 +87,10 @@ public class WarriorController : MonoBehaviour
     {
         Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointUP.transform.position, AttackPointRadius, enemies);
 
-        foreach (Collider2D enemyGameBoject in enemy)
+        foreach (Collider2D e in enemy)
         {
             Debug.Log("Enemy is Hit");
-            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
         }
     }
 
@@ -91,10 +98,10 @@ public class WarriorController : MonoBehaviour
     {
         Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointDown.transform.position, AttackPointRadius, enemies);
 
-        foreach (Collider2D enemyGameBoject in enemy)
+        foreach (Collider2D e in enemy)
         {
             Debug.Log("Enemy is Hit");
-            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
         }
     }
 
@@ -102,10 +109,10 @@ public class WarriorController : MonoBehaviour
     {
         Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointLeft.transform.position, AttackPointRadius, enemies);
 
-        foreach (Collider2D enemyGameBoject in enemy)
+        foreach (Collider2D e in enemy)
         {
             Debug.Log("Enemy is Hit");
-            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
         }
     }
 
@@ -113,10 +120,10 @@ public class WarriorController : MonoBehaviour
     {
         Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointRight.transform.position, AttackPointRadius, enemies);
 
-        foreach (Collider2D enemyGameBoject in enemy)
+        foreach (Collider2D e in enemy)
         {
             Debug.Log("Enemy is Hit");
-            enemyGameBoject.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
         }
     }
 

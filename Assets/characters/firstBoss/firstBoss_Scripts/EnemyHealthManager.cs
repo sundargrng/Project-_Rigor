@@ -14,14 +14,15 @@ public class EnemyHealthManager : MonoBehaviour
 
     private SpriteRenderer enemySprite;
 
-
     private bool isFlashing;
+
+    
+
+    
     // Start is called before the first frame update
     void Start()
     {
         enemySprite = GetComponent<SpriteRenderer>();
-        
-        
     }
 
     // Update is called once per frame
@@ -31,9 +32,6 @@ public class EnemyHealthManager : MonoBehaviour
         {
             FlashRed();
         }
-
-
-
     }
 
 
@@ -49,17 +47,22 @@ public class EnemyHealthManager : MonoBehaviour
         }
     }
 
-    private void FlashRed()
+    public void FlashRed()
     {
+        
         if (flashCountDown > 0f)
         {
             enemySprite.color = new Color(1f, 0f, 0f, 1f); // Set the sprite color to red
             flashCountDown -= Time.deltaTime;
+            
+            
         }
         else
         {
             enemySprite.color = new Color(1f, 1f, 1f, 1f); // Set the sprite color back to white
             isFlashing = false;
+
+           
         }
     }
 

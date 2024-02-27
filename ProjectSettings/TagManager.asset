@@ -11,6 +11,7 @@ TagManager:
   - KnockBack
   - PlayerKB
   - arrow
+  - HitBox
   layers:
   - Default
   - TransparentFX
