@@ -40,17 +40,11 @@ public class WarriorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(AreaTransitions.inputDisable == true)
+       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true)
         {
             return;
         }
 
-        if (DialogManager.isActive == true)
-        {
-            return;
-        }
-
-        
 
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
 
@@ -81,6 +75,7 @@ public class WarriorController : MonoBehaviour
             isAttacking = true;
         }
     }
+
 
 
     public void attackUP()
@@ -146,4 +141,15 @@ public class WarriorController : MonoBehaviour
         }
     }*/
 
+
+    
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "arrow")
+        {
+            Destroy(other.gameObject);
+        }
+    }
 }

@@ -20,6 +20,8 @@ public class FirstEnemyController : MonoBehaviour
     [SerializeField]
     private float minRange;
 
+    private Rigidbody2D eRb;
+
 
 
     // Start is called before the first frame update
@@ -29,11 +31,18 @@ public class FirstEnemyController : MonoBehaviour
 
         // the enemy will look for the object with WarriorController script attached in its component.
         target = FindObjectOfType<WarriorController>().transform;
+
+        eRb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (EnemyHealthManager.isDying)
+        {
+            return;
+        }
+
         if (Vector3.Distance(target.position, transform.position) < maxRange && Vector3.Distance(target.position, transform.position) > minRange)
         {
             followPlayer();
@@ -64,6 +73,7 @@ public class FirstEnemyController : MonoBehaviour
 
     public void attackPlayer() {
 
+        
         animator.SetBool("isDamaging", true);
 
         
