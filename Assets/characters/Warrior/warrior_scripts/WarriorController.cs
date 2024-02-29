@@ -27,6 +27,8 @@ public class WarriorController : MonoBehaviour
 
     public int playerDamage;
 
+    private FlyingSlash flyingSlash;
+
     
 
     // Start is called before the first frame update
@@ -34,13 +36,19 @@ public class WarriorController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        GameObject flyingSlashObj = GameObject.FindGameObjectWithTag("FlyingSlash");
+        if (flyingSlashObj != null)
+        {
+            flyingSlash = flyingSlashObj.GetComponent<FlyingSlash>();
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
-       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true)
+       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true || FlyingSlash.lemmeSlash)
         {
             return;
         }
@@ -51,7 +59,8 @@ public class WarriorController : MonoBehaviour
         animator.SetFloat("moveX", rb.velocity.x);
         animator.SetFloat("moveY", rb.velocity.y);
 
-        if(Input.GetAxisRaw("Horizontal") ==1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+        
+        if (Input.GetAxisRaw("Horizontal") ==1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
@@ -141,7 +150,10 @@ public class WarriorController : MonoBehaviour
         }
     }*/
 
-
+    void slashAttack()
+    {
+        flyingSlash.InstantiateSwordSlash();
+    }
     
 
 

@@ -12,6 +12,7 @@ TagManager:
   - PlayerKB
   - arrow
   - HitBox
+  - FlyingSlash
   layers:
   - Default
   - TransparentFX
