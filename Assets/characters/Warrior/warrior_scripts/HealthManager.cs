@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
-
     public int currentHealth;
     public int maxHealth;
 

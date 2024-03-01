@@ -47,10 +47,5 @@ public class arrowFly : MonoBehaviour
                 other.gameObject.SetActive(false);
             }
         }
-
-
     }
-
-
-     
 }

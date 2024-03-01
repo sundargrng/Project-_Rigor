@@ -1596,7 +1596,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   homePos: {fileID: 850045062}
   speed: 1.5
-  maxRange: 4
+  maxRange: 10
   minRange: 1.5
 --- !u!114 &236218499
 MonoBehaviour:
@@ -1625,8 +1625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02366e6f23e8bd84fbea08f405680c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  maxhealth: 10
+  currentHealth: 100
+  maxhealth: 100
   rb2d: {fileID: 236218493}
   strength: 1000
   receiver: {fileID: 236218496}
@@ -16222,7 +16222,9 @@ EdgeCollider2D:
   - {x: -6.404537, y: -29.011375}
   - {x: -11.007748, y: -29.019537}
   - {x: -11.000457, y: -27.810083}
-  - {x: -7.138802, y: -27.810453}
+  - {x: -8.134014, y: -27.804478}
+  - {x: -7.497192, y: -27.755743}
+  - {x: -7.2329745, y: -27.675127}
   - {x: -7.7935867, y: -27.440037}
   - {x: -8.138976, y: -27.078989}
   - {x: -8.620285, y: -26.940033}
@@ -17192,8 +17194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02366e6f23e8bd84fbea08f405680c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  maxhealth: 10
+  currentHealth: 50
+  maxhealth: 50
   rb2d: {fileID: 772581842}
   strength: 1000
   receiver: {fileID: 772581838}
@@ -28140,7 +28142,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cb71bac98b0301044b1b7988399f8a76, type: 3}
+  m_Sprite: {fileID: -1745260532, guid: 564477f06120e6c4ebff577c4efd6b61, type: 3}
   m_Color: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -28148,7 +28150,7 @@ SpriteRenderer:
   m_Size: {x: 17.1875, y: 12.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &937212224
@@ -41342,8 +41344,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42185, y: -0.66155005, z: 0}
-    m_Extent: {x: 1.17375, y: 0.94995, z: 0}
+    m_Center: {x: 0.41465, y: -0.6619, z: 0}
+    m_Extent: {x: 1.17515, y: 0.9616, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -41415,8 +41417,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42825, y: -0.6557, z: 0}
-    m_Extent: {x: 0.50785, y: 0.3624, z: 0}
+    m_Center: {x: 0.4224, y: -0.65929997, z: 0}
+    m_Extent: {x: 0.5038, y: 0.3663, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -42189,12 +42191,20 @@ PrefabInstance:
       value: 0.009
       objectReference: {fileID: 0}
     - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
+      propertyPath: SlashPoint
+      value: 
+      objectReference: {fileID: 7274159747349386393, guid: 580f6ec2174893e48b5f195a91580e8d, type: 3}
+    - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: AttackPoint
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
+      propertyPath: slashDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: playerDamage
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: AttackPointUP
@@ -42221,6 +42231,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1070850230}
     - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
+      propertyPath: SlashPointRadius
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4543778138722226912, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: AttackPointRadius
       value: 0.65
       objectReference: {fileID: 0}
@@ -42230,11 +42244,11 @@ PrefabInstance:
       objectReference: {fileID: 681735274, guid: 4c83ac908cc2c1943b26a236d6bdd886, type: 3}
     - target: {fileID: 6615087479274278409, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: maxHealth
-      value: 100000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6615087479274278409, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: currentHealth
-      value: 100000
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8347329580475343812, guid: 9207a87bc75797f49951b7c76010166c, type: 3}
       propertyPath: m_TagString

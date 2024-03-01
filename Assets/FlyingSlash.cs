@@ -8,7 +8,7 @@ using UnityEngine;
 public class FlyingSlash : MonoBehaviour
 {
     private Camera mainCam;
-    private Vector3 mousePos;
+    private Vector3 currentMousePos;
 
     public GameObject swordSlash;
     public Transform flyingSlashTransform;
@@ -19,13 +19,20 @@ public class FlyingSlash : MonoBehaviour
 
     public Animator animator;
 
-    public static bool lemmeSlash = false;
+    //public static bool lemmeSlash = false;
 
-    
+    private Rigidbody2D playerRB;
+
 
     // Start is called before the first frame update
     void Start()
     {
+
+        GameObject rb = GameObject.FindGameObjectWithTag("Player");
+        if (rb != null)
+        {
+            playerRB = rb.GetComponent<Rigidbody2D>();
+        }
 
         // Find the GameObject with the "Player" tag and get its Animator component
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -54,7 +61,9 @@ public class FlyingSlash : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            lemmeSlash = true;
+            playerRB.velocity = Vector2.zero;
+
+            //lemmeSlash = true;
             
             Vector3 currentMousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Vector3 rotation = currentMousePos - transform.position;
@@ -76,6 +85,8 @@ public class FlyingSlash : MonoBehaviour
                     animator.SetBool("isSlashing", false);
 
                     Timer = 0;
+                    Instantiate(swordSlash, flyingSlashTransform.position, Quaternion.identity);
+
                 }
             }
 
@@ -90,7 +101,7 @@ public class FlyingSlash : MonoBehaviour
         }
         else
         {
-            lemmeSlash = false;
+            //lemmeSlash = false;
 
             animator.SetBool("inStance", false);
             animator.SetFloat("stanceX", 0); // Reset blend tree values to idle
@@ -101,10 +112,4 @@ public class FlyingSlash : MonoBehaviour
             animator.SetBool("isSlashing", false);
         }
     }
-
-    public void InstantiateSwordSlash()
-    {
-        Instantiate(swordSlash, flyingSlashTransform.position, Quaternion.identity);
-    }
-
 }

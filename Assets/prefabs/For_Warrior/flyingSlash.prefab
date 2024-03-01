@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1305643741592100585}
   - component: {fileID: 3806148240612489295}
   - component: {fileID: 1836214224361953238}
-  - component: {fileID: 5996392905661890765}
+  - component: {fileID: -3461634847457432932}
   m_Layer: 0
   m_Name: flyingSlash
   m_TagString: Untagged
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7274159747349386393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.403, y: -1.33, z: 0.09950302}
+  m_LocalPosition: {x: -0.485, y: -1.33, z: 0.09950302}
   m_LocalScale: {x: 0.75, y: 1.16, z: 0.04}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1745260532, guid: 564477f06120e6c4ebff577c4efd6b61, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 089c36842be066f4aab714ed0b3d1a49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 17.1875, y: 12.5}
+  m_Size: {x: 1.71875, y: 0.84375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -99,8 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c0edc73614b7fe4eb4e311fb34e2779, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  force: 10
-  slashDamage: 1
+  speed: 10
 --- !u!50 &1836214224361953238
 Rigidbody2D:
   serializedVersion: 4
@@ -109,14 +108,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7274159747349386393}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -128,7 +127,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &5996392905661890765
+--- !u!60 &-3461634847457432932
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,8 +163,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.4375, y: 0.71875}
-    newSize: {x: 17.1875, y: 12.5}
+    oldSize: {x: 1.71875, y: 0.84375}
+    newSize: {x: 1.71875, y: 0.84375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

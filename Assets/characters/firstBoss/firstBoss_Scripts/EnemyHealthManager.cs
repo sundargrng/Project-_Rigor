@@ -29,6 +29,8 @@ public class EnemyHealthManager : MonoBehaviour
 
     public static bool isDying = false;
 
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,20 @@ public class EnemyHealthManager : MonoBehaviour
         }
     }
 
+    public void TakingSwordWaves(int damage)
+    {
+        if (currentHealth > 0)
+        {
+            currentHealth -= damage;
+            isFlashing = true;
+            flashCountDown = flashDuration;
+        }
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    } 
 
     public void TakeDamage(int damage)
     {
@@ -86,7 +102,7 @@ public class EnemyHealthManager : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
@@ -102,4 +118,7 @@ public class EnemyHealthManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
         gameObject.SetActive(false);
     }
+
+    
+
 }

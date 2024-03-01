@@ -21,15 +21,17 @@ public class WarriorController : MonoBehaviour
     public GameObject AttackPointLeft;
     public GameObject AttackPointRight;
     public GameObject AttackPointDown;
+    
 
     public float AttackPointRadius;
+    
+
     public LayerMask enemies;
 
     public int playerDamage;
+    
 
     private FlyingSlash flyingSlash;
-
-    
 
     // Start is called before the first frame update
     void Start()
@@ -48,7 +50,7 @@ public class WarriorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true || FlyingSlash.lemmeSlash)
+       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true)
         {
             return;
         }
@@ -149,12 +151,6 @@ public class WarriorController : MonoBehaviour
             transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
         }
     }*/
-
-    void slashAttack()
-    {
-        flyingSlash.InstantiateSwordSlash();
-    }
-    
 
 
     private void OnTriggerEnter2D(Collider2D other)
