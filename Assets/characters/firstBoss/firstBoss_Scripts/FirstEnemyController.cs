@@ -22,8 +22,7 @@ public class FirstEnemyController : MonoBehaviour
 
     private Rigidbody2D eRb;
 
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -38,10 +37,7 @@ public class FirstEnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EnemyHealthManager.isDying)
-        {
-            return;
-        }
+        
 
         if (Vector3.Distance(target.position, transform.position) < maxRange && Vector3.Distance(target.position, transform.position) > minRange)
         {

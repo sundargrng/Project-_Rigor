@@ -27,9 +27,11 @@ public class EnemyHealthManager : MonoBehaviour
 
     [SerializeField] private Transform receiver;
 
-    public static bool isDying = false;
-
     
+
+    [SerializeField] private GameObject damagePopUpPrefab;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,7 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (isFlashing)
         {
             FlashRed();
@@ -54,6 +57,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         if (currentHealth > 0)
         {
+            ShowDamage(damage.ToString());
             currentHealth -= damage;
             isFlashing = true;
             flashCountDown = flashDuration;
@@ -74,18 +78,33 @@ public class EnemyHealthManager : MonoBehaviour
         Vector2 distance = (receiver.transform.position - sender.transform.position).normalized;
         rb2d.AddForce(distance*strength, ForceMode2D.Impulse);
 
-        StartCoroutine(MoveDelay());
+        StartCoroutine(MoveDelay(damage));
 
         if (currentHealth <= 0)
         {
+            rb2d.velocity = Vector3.zero;
             Die();
         }
     }
 
-    IEnumerator MoveDelay()
+    IEnumerator MoveDelay(int damage)
     {
         yield return new WaitForSeconds(moveDelay); // Wait for the specified delay
         rb2d.velocity = Vector2.zero;
+
+        if(rb2d.velocity == Vector2.zero)
+        {
+            ShowDamage(damage.ToString());
+        }
+    }
+
+    void ShowDamage(string text)
+    {
+        if (damagePopUpPrefab)
+        {
+            GameObject prefab = Instantiate(damagePopUpPrefab, transform.position, Quaternion.identity);
+            prefab.GetComponentInChildren<TextMesh>().text = text;
+        }
     }
 
     public void FlashRed()
@@ -106,7 +125,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
-        isDying = true;
+        
     }
 
     IEnumerator DisableObjectAfterAnimation()
@@ -118,7 +137,4 @@ public class EnemyHealthManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
         gameObject.SetActive(false);
     }
-
-    
-
 }
