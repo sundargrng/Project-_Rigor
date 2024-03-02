@@ -9,6 +9,8 @@ public class slashFly : MonoBehaviour
     public float speed;
     public int damage = 10;
 
+    //public GameObject hitEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +33,14 @@ public class slashFly : MonoBehaviour
             // Get the EnemyHealth component from the enemy GameObject
             EnemyHealthManager enemyHealth = collision.GetComponent<EnemyHealthManager>();
 
+            
             // If the enemy has an EnemyHealth component, apply damage to it
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(damage);
+                enemyHealth.TakingSwordWaves(damage);
+
+                /*GameObject effect = Instantiate(hitEffect, this.transform.position, Quaternion.identity);
+                Destroy(effect, 0.5f);*/
             }
 
             // Destroy the sword slash GameObject after it hits an enemy
