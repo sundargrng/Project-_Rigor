@@ -90,7 +90,7 @@ public class FlyingSlash : MonoBehaviour
                 }
             }
 
-            if (Input.GetMouseButton(1) && canSlash)
+            if (Input.GetMouseButton(1) || Input.GetKey(KeyCode.E) && canSlash)
             {
                 canSlash = false;
                 animator.SetFloat("slashX", rotation.x);

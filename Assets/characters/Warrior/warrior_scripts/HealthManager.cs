@@ -14,10 +14,18 @@ public class HealthManager : MonoBehaviour
     private float flashCountDown = 0f;
 
     private SpriteRenderer playerSprite;
+
+    private Animator playerAnim;
     // Start is called before the first frame update
     void Start()
     {
         playerSprite = GetComponent<SpriteRenderer>();
+
+        GameObject animator = GameObject.FindGameObjectWithTag("Player");
+        if (animator != null)
+        {
+            playerAnim = animator.GetComponent<Animator>();
+        }
     }
 
     // Update is called once per frame
@@ -63,7 +71,7 @@ public class HealthManager : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            playerAnim.SetTrigger("death");
         }
     }
 }
