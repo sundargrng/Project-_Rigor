@@ -29,7 +29,7 @@ public class EnemyHealthManager : MonoBehaviour
 
     [SerializeField] private GameObject damagePopUpPrefab;
 
-    [SerializeField] private enemyHealthBar healthBar;
+    [SerializeField] private EnemyHpBar healthBar;
 
 
     // Start is called before the first frame update
@@ -41,10 +41,9 @@ public class EnemyHealthManager : MonoBehaviour
         sender = FindObjectOfType<WarriorController>().transform;
         receiver = GetComponent<Transform>();
 
-        healthBar = GetComponentInChildren<enemyHealthBar>();
-
         currentHealth = maxhealth;
-        healthBar.UpdateHpBar(currentHealth, maxhealth);
+
+        healthBar = FindObjectOfType<EnemyHpBar>();
     }
 
     // Update is called once per frame
@@ -61,7 +60,7 @@ public class EnemyHealthManager : MonoBehaviour
     {
         if (currentHealth > 0)
         {
-            healthBar.UpdateHpBar(currentHealth, maxhealth);
+
             ShowDamage(damage.ToString());
             currentHealth -= damage;
             isFlashing = true;
@@ -77,7 +76,6 @@ public class EnemyHealthManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        healthBar.UpdateHpBar(currentHealth, maxhealth);
         currentHealth -= damage;
         isFlashing = true;
         flashCountDown = flashDuration;
@@ -130,7 +128,7 @@ public class EnemyHealthManager : MonoBehaviour
 
     public void Die()
     {
-        healthBar.gameObject.SetActive(false);
+        //healthBar.gameObject.SetActive(false);
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
         
