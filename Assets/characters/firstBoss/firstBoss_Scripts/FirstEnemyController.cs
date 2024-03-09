@@ -58,6 +58,11 @@ public class FirstEnemyController : MonoBehaviour
 
     public void followPlayer()
     {
+        if(EnemyHealthManager.deadFr == true)
+        {
+            return;
+        }
+
         animator.SetBool("inRange", true);
 
         // when enemy follows the player, sets the animation to the direction of player

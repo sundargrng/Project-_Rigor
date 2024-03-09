@@ -22,28 +22,18 @@ public class WarriorController : MonoBehaviour
     public GameObject AttackPointRight;
     public GameObject AttackPointDown;
     
-
     public float AttackPointRadius;
     
-
     public LayerMask enemies;
 
     public int playerDamage;
     
-
-    private FlyingSlash flyingSlash;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-
-        GameObject flyingSlashObj = GameObject.FindGameObjectWithTag("FlyingSlash");
-        if (flyingSlashObj != null)
-        {
-            flyingSlash = flyingSlashObj.GetComponent<FlyingSlash>();
-        }
     }
 
 
@@ -86,8 +76,6 @@ public class WarriorController : MonoBehaviour
             isAttacking = true;
         }
     }
-
-
 
     public void attackUP()
     {

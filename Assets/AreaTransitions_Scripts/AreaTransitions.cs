@@ -5,12 +5,15 @@ using UnityEngine.UI;
 
 public class AreaTransitions : MonoBehaviour
 {
+    private Camera camera;
     private CameraController cam;
     public Vector2 newCamMinPos;
     public Vector2 newCamMaxPos;
     public Vector3 movePlayer;
 
     public Image fadeImage;
+
+    public float newCamSize;
 
     private bool inTransition = false;
 
@@ -19,6 +22,7 @@ public class AreaTransitions : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        camera = Camera.main;
         cam = Camera.main.GetComponent<CameraController>();
         fadeImage = GameObject.Find("FadeImage").GetComponent<Image>(); // Update "FadeImage" with the name of your image object
     }
@@ -45,8 +49,14 @@ public class AreaTransitions : MonoBehaviour
             cam.minPosition = newCamMinPos;
             cam.maxPosition = newCamMaxPos;
 
+            camera.orthographicSize = newCamSize;
+
+            
+
             // Move player to new area
             other.transform.position += movePlayer;
+
+            cam.target = other.transform;
 
             // Fade out black screen after camera transition
             StartCoroutine(FadeOutBlackScreen());
@@ -57,8 +67,6 @@ public class AreaTransitions : MonoBehaviour
     {
         // Wait for camera transition and player movement to complete
         yield return new WaitForSeconds(0.5f);
-
-        
         fadeImage.color = new Color(0, 0, 0, 0);
         LeanTween.alpha(fadeImage.rectTransform, 0f, 0.5f);
         inTransition = false;

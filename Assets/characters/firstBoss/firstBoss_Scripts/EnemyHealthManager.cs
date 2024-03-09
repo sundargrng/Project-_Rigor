@@ -31,6 +31,8 @@ public class EnemyHealthManager : MonoBehaviour
 
     [SerializeField] private EnemyHpBar healthBar;
 
+    public static bool deadFr = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -129,6 +131,7 @@ public class EnemyHealthManager : MonoBehaviour
     public void Die()
     {
         //healthBar.gameObject.SetActive(false);
+        deadFr = true;
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
         
