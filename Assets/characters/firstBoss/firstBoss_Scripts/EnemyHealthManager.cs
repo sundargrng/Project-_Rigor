@@ -131,6 +131,8 @@ public class EnemyHealthManager : MonoBehaviour
     public void Die()
     {
         //healthBar.gameObject.SetActive(false);
+        GetComponent<LootBag>().InstantiateLoot(transform.position);
+
         deadFr = true;
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());

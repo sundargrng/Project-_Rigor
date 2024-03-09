@@ -3564,6 +3564,7 @@ GameObject:
   - component: {fileID: 236218498}
   - component: {fileID: 236218499}
   - component: {fileID: 236218500}
+  - component: {fileID: 236218501}
   m_Layer: 3
   m_Name: Meele_Enemy
   m_TagString: Enemy
@@ -3787,6 +3788,23 @@ MonoBehaviour:
   receiver: {fileID: 236218496}
   damagePopUpPrefab: {fileID: 8823999113510876231, guid: 6db2a7456374f2f48b44157d82ea8e5b, type: 3}
   healthBar: {fileID: 163410309}
+--- !u!114 &236218501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236218492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d79e2c337ec1c44a264e5419a69c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 4376941931146009590, guid: 841b9488aff66044bb78015f7a8d9b4b, type: 3}
+  lootList:
+  - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
+  - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
+  dropForce: 300
 --- !u!1 &267171400
 GameObject:
   m_ObjectHideFlags: 0
@@ -26503,6 +26521,7 @@ GameObject:
   - component: {fileID: 772581841}
   - component: {fileID: 772581840}
   - component: {fileID: 772581842}
+  - component: {fileID: 772581843}
   m_Layer: 3
   m_Name: ArcherEnemies
   m_TagString: Enemy
@@ -26710,6 +26729,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &772581843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772581835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d79e2c337ec1c44a264e5419a69c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 4376941931146009590, guid: 841b9488aff66044bb78015f7a8d9b4b, type: 3}
+  lootList:
+  - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
+  - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
+  dropForce: 300
 --- !u!1 &810148124
 GameObject:
   m_ObjectHideFlags: 0
@@ -80775,8 +80811,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42495003, y: -0.658, z: 0}
-    m_Extent: {x: 1.18025, y: 0.95790005, z: 0}
+    m_Center: {x: 0.41805002, y: -0.65680003, z: 0}
+    m_Extent: {x: 1.17565, y: 0.9585, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -80848,8 +80884,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.41885, y: -0.655, z: 0}
-    m_Extent: {x: 0.50705, y: 0.3627, z: 0}
+    m_Center: {x: 0.41765, y: -0.66515005, z: 0}
+    m_Extent: {x: 0.51165, y: 0.36535, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -91266,6 +91302,7 @@ GameObject:
   - component: {fileID: 2005256778}
   - component: {fileID: 2005256777}
   - component: {fileID: 2005256776}
+  - component: {fileID: 2005256783}
   m_Layer: 3
   m_Name: ArcherEnemies 2
   m_TagString: Enemy
@@ -91473,6 +91510,23 @@ Transform:
   - {fileID: 267171401}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2005256783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2005256775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d79e2c337ec1c44a264e5419a69c4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droppedItemPrefab: {fileID: 4376941931146009590, guid: 841b9488aff66044bb78015f7a8d9b4b, type: 3}
+  lootList:
+  - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
+  - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
+  dropForce: 300
 --- !u!1 &2007203728
 GameObject:
   m_ObjectHideFlags: 0
