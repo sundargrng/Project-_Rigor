@@ -74,4 +74,17 @@ public class HealthManager : MonoBehaviour
             playerAnim.SetTrigger("death");
         }
     }
+
+    public void RestoreHealth(Loot loot)
+    {
+        // Check if current health is less than maximum health
+        if (currentHealth < maxHealth)
+        {
+            // Calculate amount of healing
+            int amountToHeal = Mathf.Min(loot.healthRestoreAmount, maxHealth - currentHealth);
+
+            // Apply healing
+            currentHealth += amountToHeal;
+        }
+    }
 }

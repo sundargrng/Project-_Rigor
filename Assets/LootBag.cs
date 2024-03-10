@@ -7,9 +7,20 @@ public class LootBag : MonoBehaviour
     public List<Loot> lootList = new List<Loot>();
     public float dropForce = 300f;
 
+    private bool lootSpawned = false; // Flag to track if loot has been spawned
+
+    private void Start()
+    {
+        // Ensure there's at least one loot item in the lootList
+        if (lootList.Count == 0)
+        {
+            Debug.LogError("No loot items assigned to LootBag!");
+        }
+    }
+
     Loot GetDroppedItem()
     {
-        int randomNumber = Random.Range(1, 101); //0 and 101 excluded
+        int randomNumber = Random.Range(1, 101); // 0 and 101 excluded
         List<Loot> possibleItems = new List<Loot>();
 
         foreach (Loot item in lootList)
@@ -30,23 +41,34 @@ public class LootBag : MonoBehaviour
         return null;
     }
 
-    public void InstantiateLoot(Vector3 spawnPosition)
+    public void SpawnLoot(Vector3 spawnPosition)
     {
-        Loot droppedItem = GetDroppedItem();
-
-        if (droppedItem != null)
+        if (!lootSpawned)
         {
-            GameObject lootGameObject = Instantiate(droppedItemPrefab, spawnPosition, Quaternion.identity);
-            lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.lootSprite;
+            Loot droppedItem = GetDroppedItem();
 
-            // Apply an impulse force in a random direction
-            Vector2 dropDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
-            Rigidbody2D rb = lootGameObject.GetComponent<Rigidbody2D>();
-            rb.AddForce(dropDirection * dropForce, ForceMode2D.Impulse);
+            if (droppedItem != null)
+            {
+                GameObject lootGameObject = Instantiate(droppedItemPrefab, spawnPosition, Quaternion.identity);
+                Collider2D collider = lootGameObject.AddComponent<CircleCollider2D>(); // Add Collider2D component
+                collider.isTrigger = true; // Set collider as trigger
 
-            // Stop the object after applying force
-            rb.velocity = Vector2.zero;
-            rb.angularVelocity = 0f;
+                LootCollision lootCollision = lootGameObject.AddComponent<LootCollision>(); // Add LootCollision script
+                lootCollision.loot = droppedItem;
+
+                lootGameObject.GetComponent<SpriteRenderer>().sprite = droppedItem.lootSprite;
+
+                // Apply an impulse force in a random direction
+                Vector2 dropDirection = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+                Rigidbody2D rb = lootGameObject.GetComponent<Rigidbody2D>();
+                rb.AddForce(dropDirection * dropForce, ForceMode2D.Impulse);
+
+                // Stop the object after applying force
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+
+                lootSpawned = true; // Mark loot as spawned
+            }
         }
     }
 }

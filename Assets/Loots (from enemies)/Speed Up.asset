@@ -15,3 +15,4 @@ MonoBehaviour:
   lootSprite: {fileID: 21300000, guid: a5705d88a6aa50740971b913800c4bf7, type: 3}
   lootName: moreSpeed
   dropChance: 50
+  healthRestoreAmount: 2

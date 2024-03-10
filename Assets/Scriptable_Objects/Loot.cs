@@ -8,11 +8,12 @@ public class Loot : ScriptableObject
     public Sprite lootSprite;
     public string lootName;
     public int dropChance;
+    public int healthRestoreAmount; // New property to store health restoration amount
 
-    public Loot(string lootName, int dropChance)
+    public Loot(string lootName, int dropChance, int healthRestoreAmount)
     {
         this.lootName = lootName;
         this.dropChance = dropChance;
+        this.healthRestoreAmount = healthRestoreAmount;
     }
-
 }
