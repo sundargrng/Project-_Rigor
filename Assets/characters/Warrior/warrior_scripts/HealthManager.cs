@@ -77,6 +77,11 @@ public class HealthManager : MonoBehaviour
 
     public void RestoreHealth(Loot loot)
     {
+        if (loot == null)
+        {
+            return;
+        }
+
         // Check if current health is less than maximum health
         if (currentHealth < maxHealth)
         {
