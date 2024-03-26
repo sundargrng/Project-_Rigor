@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class CameraController : MonoBehaviour, IDataPersistence
 {
     public Transform target;
     public float smoothing;
@@ -30,5 +30,23 @@ public class CameraController : MonoBehaviour
 
             transform.position = Vector3.Lerp(transform.position, targetPosition, smoothing);
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        // Load camera data
+        transform.position = new Vector3(data.cameraPosition.x, data.cameraPosition.y, -10f);
+        minPosition = data.cameraMinPosition;
+        maxPosition = data.cameraMaxPosition;
+        Camera.main.orthographicSize = data.cameraSize;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        // Save camera data
+        data.cameraPosition = transform.position;
+        data.cameraMinPosition = minPosition;
+        data.cameraMaxPosition = maxPosition;
+        data.cameraSize = Camera.main.orthographicSize;
     }
 }

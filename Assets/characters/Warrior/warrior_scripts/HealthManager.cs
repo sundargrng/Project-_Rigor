@@ -72,8 +72,20 @@ public class HealthManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             playerAnim.SetTrigger("death");
+            FindObjectOfType<UIManager>().IncrementDeathCount(); // Increment death count
         }
     }
+
+    public void LoadData(GameData data)
+    {
+        this.currentHealth = data.currentHealth; // Load currentHealth
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.currentHealth = this.currentHealth; // Save currentHealth
+    }
+
 
     public void RestoreHealth(Loot loot)
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class WarriorController : MonoBehaviour
+public class WarriorController : MonoBehaviour, IDataPersistence
 {
     private Rigidbody2D rb;
 
@@ -129,6 +129,16 @@ public class WarriorController : MonoBehaviour
         Gizmos.DrawWireSphere(AttackPointLeft.transform.position, AttackPointRadius);
         Gizmos.DrawWireSphere(AttackPointRight.transform.position, AttackPointRadius);
         Gizmos.DrawWireSphere(AttackPointDown.transform.position, AttackPointRadius);
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = this.transform.position;
     }
 
     /*private void OnTriggerEnter2D(Collider2D other)
