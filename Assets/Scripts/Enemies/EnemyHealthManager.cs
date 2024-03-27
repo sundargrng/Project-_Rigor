@@ -33,6 +33,8 @@ public class EnemyHealthManager : MonoBehaviour
 
     public static bool deadFr = false;
 
+    int expAmount = 100;
+
 
     // Start is called before the first frame update
     void Start()
@@ -132,7 +134,6 @@ public class EnemyHealthManager : MonoBehaviour
     {
         //healthBar.gameObject.SetActive(false);
         GetComponent<LootBag>().SpawnLoot(transform.position);
-
         deadFr = true;
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
@@ -147,5 +148,6 @@ public class EnemyHealthManager : MonoBehaviour
         // Set the object inactive after the fade is complete
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
         gameObject.SetActive(false);
+        ExperienceManager.Instance.AddExperience(expAmount);
     }
 }

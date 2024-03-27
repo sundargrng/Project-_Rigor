@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 9222422160238232410}
   - component: {fileID: 6615087479274278409}
   - component: {fileID: 4224937264235434003}
+  - component: {fileID: 4342655332847823674}
   m_Layer: 0
   m_Name: Warrior
   m_TagString: Player
@@ -383,11 +384,11 @@ MonoBehaviour:
   AttackPointLeft: {fileID: 0}
   AttackPointRight: {fileID: 0}
   AttackPointDown: {fileID: 0}
-  AttackPointRadius: 0
+  AttackPointRadius: 0.65
   enemies:
     serializedVersion: 2
-    m_Bits: 0
-  playerDamage: 0
+    m_Bits: 8
+  playerDamage: 5
 --- !u!50 &4377305904480634644
 Rigidbody2D:
   serializedVersion: 4
@@ -496,6 +497,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.57496357, y: 0.6775634}
   m_EdgeRadius: 0
+--- !u!114 &4342655332847823674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2983457569844435448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1435ded67369474f987a18b011fa68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 10
+  maxHealth: 10
+  currentExperience: 0
+  maxExperience: 100
+  currentLevel: 1
 --- !u!1 &8347329580475343812
 GameObject:
   m_ObjectHideFlags: 0

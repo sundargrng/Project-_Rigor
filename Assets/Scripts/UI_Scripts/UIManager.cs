@@ -32,17 +32,11 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.deathCount = data.deathCount;
-        // Check if healthManager is not null before accessing its properties
-        if (healthManager != null)
-        {
-            healthManager.currentHealth = data.currentHealth;
-        }
     }
 
     public void SaveData (ref GameData data)
     {
         data.deathCount = this.deathCount;
-        data.currentHealth = healthManager.currentHealth;
     }
 
 

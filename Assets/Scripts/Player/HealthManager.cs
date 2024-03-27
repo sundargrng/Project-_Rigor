@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthManager : MonoBehaviour
+public class HealthManager : MonoBehaviour, IDataPersistence
 {
-    public int currentHealth;
-    public int maxHealth;
+    public int currentHealth = 10;
+    public int maxHealth = 10;
 
     private bool hurtFlash;
 
@@ -78,14 +78,17 @@ public class HealthManager : MonoBehaviour
 
     public void LoadData(GameData data)
     {
-        this.currentHealth = data.currentHealth; // Load currentHealth
+        // Existing loading logic
+        this.currentHealth = data.playerHealth;
+        this.maxHealth = data.playerHealthMax;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.currentHealth = this.currentHealth; // Save currentHealth
+        // Existing saving logic
+        data.playerHealth = this.currentHealth;
+        data.playerHealthMax = this.maxHealth;
     }
-
 
     public void RestoreHealth(Loot loot)
     {
