@@ -509,10 +509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1435ded67369474f987a18b011fa68b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 10
-  maxHealth: 10
   currentExperience: 0
-  maxExperience: 100
+  maxExperience: 200
   currentLevel: 1
 --- !u!1 &8347329580475343812
 GameObject:

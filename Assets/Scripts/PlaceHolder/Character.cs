@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, IDataPersistence
 {
-    [SerializeField] int currentExperience, maxExperience, currentLevel;
+    public int currentExperience, maxExperience, currentLevel;
 
     private HealthManager playerHealth;
 
@@ -46,6 +46,9 @@ public class Character : MonoBehaviour, IDataPersistence
         // Reset current health to max health
         playerHealth.currentHealth = playerHealth.maxHealth;
 
+        //When player level ups, current experience resets to zero
+        currentExperience = 0;
+
         // Update max experience for next level
         maxExperience += 100;
     }
@@ -54,6 +57,7 @@ public class Character : MonoBehaviour, IDataPersistence
     {
         // Load player experience and level from saved data
         this.currentExperience = data.currentExperience;
+        this.maxExperience = data.currentExperienceMax;
         this.currentLevel = data.currentLevel;
 
         // Other loading logic for your character
@@ -63,6 +67,7 @@ public class Character : MonoBehaviour, IDataPersistence
     {
         // Save player experience and level to data
         data.currentExperience = this.currentExperience;
+        data.currentExperienceMax = this.maxExperience;
         data.currentLevel = this.currentLevel;
 
         // Other saving logic for your character

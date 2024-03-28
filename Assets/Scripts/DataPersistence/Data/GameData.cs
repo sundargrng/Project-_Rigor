@@ -18,6 +18,7 @@ public class GameData
     public int playerHealth;
     public int playerHealthMax;
     public int currentExperience;
+    public int currentExperienceMax;
     public int currentLevel;
 
     public GameData()
@@ -32,5 +33,8 @@ public class GameData
 
         this.playerHealth = 10;
         this.playerHealthMax = 10;
+        this.currentLevel = 1;
+        this.currentExperience = 0;
+        this.currentExperienceMax = 200;
     }
 }
