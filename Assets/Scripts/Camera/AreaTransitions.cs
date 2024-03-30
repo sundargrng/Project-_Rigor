@@ -17,7 +17,7 @@ public class AreaTransitions : MonoBehaviour
 
     private bool inTransition = false;
 
-    public static bool inputDisable = false;
+    //public static bool inputDisable = false;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +39,7 @@ public class AreaTransitions : MonoBehaviour
         {
             inTransition = true;
 
-            inputDisable = true;
+            //inputDisable = true;
 
             // Show black screen
             fadeImage.color = new Color(0, 0, 0, 1f);
@@ -66,12 +66,12 @@ public class AreaTransitions : MonoBehaviour
     IEnumerator FadeOutBlackScreen()
     {
         // Wait for camera transition and player movement to complete
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         fadeImage.color = new Color(0, 0, 0, 0);
         LeanTween.alpha(fadeImage.rectTransform, 0f, 0.5f);
         inTransition = false;
 
-        inputDisable = false;
+        //inputDisable = false;
         
     }
 }

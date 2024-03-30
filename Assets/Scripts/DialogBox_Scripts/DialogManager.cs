@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DialogManager : MonoBehaviour
+public class DialogManager : MonoBehaviour, IDataPersistence
 {
     public Image actorImage;
     public Text actorName;
     public Text messageText;
     public RectTransform backgroundBox;
+    public GameObject blackImage; // Reference to the black image GameObject
+    public GameObject npcObject; // Reference to the NPC GameObject
 
     Message[] currentMessages;
     Actor[] currentActors;
@@ -16,9 +18,7 @@ public class DialogManager : MonoBehaviour
     public static bool isActive = false;
 
     private Rigidbody2D playerRB;
-
     private Animator playerAnim;
-
 
     public void OpenDialogue(Message[] messages, Actor[] actors)
     {
@@ -54,14 +54,27 @@ public class DialogManager : MonoBehaviour
         if (activeMessage < currentMessages.Length)
         {
             DisplayMessage();
-        }else
+        }
+        else
         {
             Debug.Log("Conversation Ended!");
             backgroundBox.LeanScale(Vector3.zero, 0.5f).setEaseInOutExpo();
-            isActive = false;
+            StartCoroutine(FadeAndDisableNPC());
         }
     }
 
+    IEnumerator FadeAndDisableNPC()
+    {
+        blackImage.SetActive(true); // Activate the black image
+        yield return new WaitForSeconds(1.5f); // Wait for 1.5 seconds
+        blackImage.SetActive(false); // Deactivate the black image
+        isActive = false; // Disable player's movement
+
+
+        // SOme NPCs in the game blocks the way and after we finish dialogue with that NPC, that NPC gameobject is disabled
+        // Disable the NPC GameObject
+        npcObject.SetActive(false);
+    }
 
     void AnimateTextColor()
     {
@@ -78,12 +91,7 @@ public class DialogManager : MonoBehaviour
         if (rb != null)
         {
             playerRB = rb.GetComponent<Rigidbody2D>();
-        }
-
-        GameObject animator = GameObject.FindGameObjectWithTag("Player");
-        if(animator != null)
-        {
-            playerAnim = animator.GetComponent<Animator>();
+            playerAnim = rb.GetComponent<Animator>();
         }
     }
 
@@ -94,5 +102,17 @@ public class DialogManager : MonoBehaviour
         {
             NextMessage();
         }
+    }
+
+    public void LoadData(GameData data)
+    {
+        // Load NPC state from saved data
+        npcObject.SetActive(!data.isNPCDisabled);
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        // Save NPC state to data
+        data.isNPCDisabled = !npcObject.activeSelf;
     }
 }

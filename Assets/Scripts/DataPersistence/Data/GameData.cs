@@ -21,6 +21,8 @@ public class GameData
     public int currentExperienceMax;
     public int currentLevel;
 
+    public bool isNPCDisabled;
+
     public GameData()
     {
         this.deathCount = 0;

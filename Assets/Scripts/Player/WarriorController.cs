@@ -40,7 +40,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     void Update()
     {
-       if(AreaTransitions.inputDisable == true || DialogManager.isActive == true)
+       if(DialogManager.isActive == true)
         {
             return;
         }
