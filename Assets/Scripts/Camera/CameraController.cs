@@ -41,7 +41,7 @@ public class CameraController : MonoBehaviour, IDataPersistence
         Camera.main.orthographicSize = data.cameraSize;
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         // Save camera data
         data.cameraPosition = transform.position;

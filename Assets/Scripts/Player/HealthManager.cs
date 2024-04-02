@@ -83,7 +83,7 @@ public class HealthManager : MonoBehaviour, IDataPersistence
         this.maxHealth = data.playerHealthMax;
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         // Existing saving logic
         data.playerHealth = this.currentHealth;

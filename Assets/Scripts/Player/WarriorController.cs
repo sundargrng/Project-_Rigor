@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WarriorController : MonoBehaviour, IDataPersistence
 {
@@ -40,11 +41,25 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DataPersistenceManager.instance.SaveGame();
+            SceneManager.LoadSceneAsync("Main Menu");
+        }
+
        if(DialogManager.isActive == true)
         {
             return;
         }
 
+        if (FlyingSlash.lemmeSlash == true)
+        {
+            // If LeftShift is pressed, prevent the player from moving
+            rb.velocity = Vector2.zero;
+            animator.SetFloat("moveX", 0);
+            animator.SetFloat("moveY", 0);
+            return; // Exit the Update method
+        }
 
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
 
@@ -136,7 +151,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         this.transform.position = data.playerPosition;
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         data.playerPosition = this.transform.position;
     }

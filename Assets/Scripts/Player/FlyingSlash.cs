@@ -19,21 +19,11 @@ public class FlyingSlash : MonoBehaviour
 
     public Animator animator;
 
-    //public static bool lemmeSlash = false;
-
-    private Rigidbody2D playerRB;
-
+    public static bool lemmeSlash = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
-        GameObject rb = GameObject.FindGameObjectWithTag("Player");
-        if (rb != null)
-        {
-            playerRB = rb.GetComponent<Rigidbody2D>();
-        }
-
         // Find the GameObject with the "Player" tag and get its Animator component
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
@@ -61,9 +51,7 @@ public class FlyingSlash : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            playerRB.velocity = Vector2.zero;
-
-            //lemmeSlash = true;
+            lemmeSlash = true;
             
             Vector3 currentMousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Vector3 rotation = currentMousePos - transform.position;
@@ -86,7 +74,6 @@ public class FlyingSlash : MonoBehaviour
 
                     Timer = 0;
                     Instantiate(swordSlash, flyingSlashTransform.position, Quaternion.identity);
-
                 }
             }
 
@@ -96,12 +83,11 @@ public class FlyingSlash : MonoBehaviour
                 animator.SetFloat("slashX", rotation.x);
                 animator.SetFloat("slashY", rotation.y);
                 animator.SetBool("isSlashing", true);
-                
             }
         }
         else
         {
-            //lemmeSlash = false;
+            lemmeSlash = false;
 
             animator.SetBool("inStance", false);
             animator.SetFloat("stanceX", 0); // Reset blend tree values to idle

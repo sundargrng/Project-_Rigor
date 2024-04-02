@@ -63,7 +63,7 @@ public class Character : MonoBehaviour, IDataPersistence
         // Other loading logic for your character
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         // Save player experience and level to data
         data.currentExperience = this.currentExperience;

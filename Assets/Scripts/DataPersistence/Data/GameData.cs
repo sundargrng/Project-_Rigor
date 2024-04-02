@@ -5,7 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    public long lastUpdated;
+
     public int deathCount;
+    public SerializableTypeDictionary<string, bool> enemiesDefeated;
     public Vector3 playerPosition;
 
     // New camera properties
@@ -27,6 +30,8 @@ public class GameData
     {
         this.deathCount = 0;
         this.playerPosition = Vector3.zero;
+        enemiesDefeated = new SerializableTypeDictionary<string, bool>();
+
         // Initialize camera properties
         this.cameraPosition = Vector3.zero;
         this.cameraMinPosition = Vector2.zero;
@@ -38,5 +43,24 @@ public class GameData
         this.currentLevel = 1;
         this.currentExperience = 0;
         this.currentExperienceMax = 200;
+    }
+
+    public int GetPercentageComplete()
+    {
+        int totalDefeated = 0;
+        foreach (bool defeated in enemiesDefeated.Values)
+        {
+            if (defeated)
+            {
+                totalDefeated++;
+            }
+        }
+
+        int percentageCompleted = -1; // Default value in case enemiesDefeated is empty
+        if (enemiesDefeated.Count != 0)
+        {
+            percentageCompleted = (totalDefeated * 100 / enemiesDefeated.Count);
+        }
+        return percentageCompleted;
     }
 }

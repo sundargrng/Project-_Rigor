@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3164749005173673673}
   - component: {fileID: 602011311361942798}
   - component: {fileID: 7815561852501044441}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireLight
   m_TagString: CooliderObjects
   m_Icon: {fileID: 0}

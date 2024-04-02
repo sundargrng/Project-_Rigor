@@ -17,11 +17,14 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public Text deathCountText; // Text element to display death count
     private int deathCount = 0; // Variable to store death count
 
+    private SaveSlot saveSlot;
+
     // Start is called before the first frame update
     void Start()
     {
         healthManager = FindObjectOfType<HealthManager>();
         playerStat = FindObjectOfType<Character>();
+
     }
 
     // Update is called once per frame
@@ -48,7 +51,7 @@ public class UIManager : MonoBehaviour, IDataPersistence
         this.deathCount = data.deathCount;
     }
 
-    public void SaveData (ref GameData data)
+    public void SaveData (GameData data)
     {
         data.deathCount = this.deathCount;
     }

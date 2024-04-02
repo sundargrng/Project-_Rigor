@@ -110,7 +110,7 @@ public class DialogManager : MonoBehaviour, IDataPersistence
         npcObject.SetActive(!data.isNPCDisabled);
     }
 
-    public void SaveData(ref GameData data)
+    public void SaveData(GameData data)
     {
         // Save NPC state to data
         data.isNPCDisabled = !npcObject.activeSelf;

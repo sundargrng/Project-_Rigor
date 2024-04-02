@@ -20,23 +20,16 @@ public class ArcherEnemies : MonoBehaviour
 
     public Transform homePosition;
 
-    
-
-    
-
     // Start is called before the first frame update
     void Start()
     {
         player = FindAnyObjectByType<WarriorController>().transform;
         animator = GetComponent<Animator>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
         animator.SetBool("inAttackRange", true);
 
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
@@ -59,11 +52,8 @@ public class ArcherEnemies : MonoBehaviour
             animator.SetFloat("lookX", (player.position.x - this.transform.position.x));
             animator.SetFloat("lookY", (player.position.y - this.transform.position.y));
 
-           
-
             Instantiate(arrow, shootingRange.transform.position, Quaternion.identity);
         }
-
 
         if (distanceFromPlayer > attackRange && distanceFromPlayer<lineOfSite)
         {
@@ -83,20 +73,9 @@ public class ArcherEnemies : MonoBehaviour
             if (Vector2.Distance(this.transform.position, homePosition.position)==0 )
             {
                 animator.SetBool("inRange", false);
-                
             }
-
-            /*if (Vector2.Distance(transform.position, homePosition.position) != 0)
-            {
-
-                animator.SetFloat("walkX", (homePosition.position.x - this.transform.position.x));
-                animator.SetFloat("walkY", (homePosition.position.y - this.transform.position.y));
-                transform.position = Vector2.MoveTowards(this.transform.position, homePosition.position, speed * Time.deltaTime);
-            }*/
         }
     }
-
-
 
     private void OnDrawGizmosSelected()
     {

@@ -37,14 +37,7 @@ public class arrowFly : MonoBehaviour
 
             if (playerHealth != null)
             {
-                playerHealth.currentHealth -= arrowDamage;
-                Destroy(this.gameObject);
-            }
-            
-
-            if (playerHealth.currentHealth == 0)
-            {
-                other.gameObject.SetActive(false);
+                playerHealth.damagePlayer(arrowDamage);
             }
         }
     }
