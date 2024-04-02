@@ -4,32 +4,54 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
+    [Header("Menu Navigation")]
+    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+
     [Header("Menu Buttons")]
     [SerializeField] private Button newGameButton;
+    [SerializeField] private Button ContinueButton;
     [SerializeField] private Button loadGameButton;
 
     private void Start()
     {
+        DisableButtonsDependingOnData();
+    }
+
+    private void DisableButtonsDependingOnData()
+    {
         if (!DataPersistenceManager.instance.HasGameData())
         {
+            ContinueButton.interactable = false;
             loadGameButton.interactable = false;
         }
     }
 
     public void OnNewGameCLicked()
     {
-        DisableMenuButtons();
+        /*DisableMenuButtons();
 
         DataPersistenceManager.instance.NewGame();
 
-        SceneManager.LoadSceneAsync("OpeningScene");
+        SceneManager.LoadSceneAsync("OpeningScene");*/
+
+        saveSlotsMenu.ActivateMenu(false);
+        this.DeactivateMenu();
+
     }
 
     public void OnLoadGameClicked()
     {
+        saveSlotsMenu.ActivateMenu(true);
+        this.DeactivateMenu();
+    }
+
+    public void OnContinueClicked()
+    {
         DisableMenuButtons();
+
+        DataPersistenceManager.instance.SaveGame();
 
         SceneManager.LoadSceneAsync("level1");
     }
@@ -37,6 +59,17 @@ public class MainMenu : MonoBehaviour
     private void DisableMenuButtons()
     {
         newGameButton.interactable = false;
-        loadGameButton.interactable = false;
+        ContinueButton.interactable = false;
+    }
+
+    public void ActivateMenu()
+    {
+        this.gameObject.SetActive(true);
+        DisableButtonsDependingOnData();
+    }
+
+    public void DeactivateMenu()
+    {
+        this.gameObject.SetActive(false);
     }
 }
