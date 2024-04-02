@@ -2,8 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealthManager : MonoBehaviour
+public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 {
+    [SerializeField] private string id;
+
+    [ContextMenu("Generate guid for id")]
+
+    private void GenerateGuid()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
+
     public int currentHealth;
     public int maxhealth;
 
@@ -33,6 +42,8 @@ public class EnemyHealthManager : MonoBehaviour
 
     public static bool deadFr = false;
 
+    private bool defeated = false;
+
     int expAmount = 100;
 
 
@@ -53,7 +64,6 @@ public class EnemyHealthManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (isFlashing)
         {
             FlashRed();
@@ -62,9 +72,8 @@ public class EnemyHealthManager : MonoBehaviour
 
     public void TakingSwordWaves(int damage)
     {
-        if (currentHealth > 0)
+        if (currentHealth > 0 && !defeated)
         {
-
             ShowDamage(damage.ToString());
             currentHealth -= damage;
             isFlashing = true;
@@ -73,13 +82,13 @@ public class EnemyHealthManager : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            
             Die();
         }
     } 
 
     public void TakeDamage(int damage)
     {
+        defeated = false;
         currentHealth -= damage;
         isFlashing = true;
         flashCountDown = flashDuration;
@@ -135,9 +144,9 @@ public class EnemyHealthManager : MonoBehaviour
         //healthBar.gameObject.SetActive(false);
         GetComponent<LootBag>().SpawnLoot(transform.position);
         deadFr = true;
+        
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
-        
     }
 
     IEnumerator DisableObjectAfterAnimation()
@@ -147,7 +156,26 @@ public class EnemyHealthManager : MonoBehaviour
 
         // Set the object inactive after the fade is complete
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
+        defeated = true;
         gameObject.SetActive(false);
         ExperienceManager.Instance.AddExperience(expAmount);
+    }
+
+    public void LoadData(GameData data)
+    {
+        data.enemiesDefeated.TryGetValue(id, out defeated);
+        if (defeated)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.enemiesDefeated.ContainsKey(id))
+        {
+            data.enemiesDefeated.Remove(id);
+        }
+        data.enemiesDefeated.Add(id, defeated);
     }
 }
