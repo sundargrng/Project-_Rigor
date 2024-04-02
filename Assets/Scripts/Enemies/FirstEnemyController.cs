@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FirstEnemyController : MonoBehaviour
 {
-
     private Animator animator; // reference to animator for firstEnemy
 
     private Transform target; // the enemy follows the target if the target is in range. Target is player
@@ -37,9 +36,7 @@ public class FirstEnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
-        if (Vector3.Distance(target.position, transform.position) < maxRange && Vector3.Distance(target.position, transform.position) > minRange)
+        if (Vector3.Distance(target.position, transform.position) <= maxRange && Vector3.Distance(target.position, transform.position) > minRange)
         {
             followPlayer();
             noAttackPlayer();
@@ -48,14 +45,12 @@ public class FirstEnemyController : MonoBehaviour
         {
             attackPlayer();
         }
-        else if(Vector3.Distance(target.position, transform.position)>= maxRange)
+        else if(Vector3.Distance(target.position, transform.position)> maxRange)
         {
             GoHome();
         }
     }
-        
-
-
+       
     public void followPlayer()
     {
         if(EnemyHealthManager.deadFr == true)
@@ -72,12 +67,10 @@ public class FirstEnemyController : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
 
-    public void attackPlayer() {
-
-        
+    public void attackPlayer() 
+    {
         animator.SetBool("isDamaging", true);
 
-        
         animator.SetFloat("X", (target.position.x - transform.position.x));
         animator.SetFloat("Y", (target.position.y - transform.position.y));
 
@@ -90,10 +83,7 @@ public class FirstEnemyController : MonoBehaviour
 
         animator.SetFloat("moveX", (target.position.x - transform.position.x));
         animator.SetFloat("moveY", (target.position.y - transform.position.y));
-
-      
     }
-
 
     public void GoHome()
     {
@@ -104,24 +94,6 @@ public class FirstEnemyController : MonoBehaviour
         if (Vector3.Distance(transform.position, homePos.position) == 0)
         {
             animator.SetBool("inRange", false);
-        }
-    }
-
-    /*private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "KnockBack")
-        {
-            Vector2 difference = transform.position - other.transform.position;
-            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
-        }
-    }*/
-
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "ColliderObjects")
-        {
-            target = FindObjectOfType<WarriorController>().transform;
         }
     }
 }
