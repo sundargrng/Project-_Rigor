@@ -790,7 +790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDeleteClicked
+      value: OnClearClicked
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -866,11 +866,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8638395712013118324, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 398.0282
+      value: 400
       objectReference: {fileID: 0}
     - target: {fileID: 8638395712013118324, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 35
+      value: -145
       objectReference: {fileID: 0}
     - target: {fileID: 8638395712013118324, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3370,8 +3370,8 @@ MonoBehaviour:
   firstSelected: {fileID: 1557808179}
   saveSlotsMenu: {fileID: 2113658144}
   newGameButton: {fileID: 1557808179}
-  ContinueButton: {fileID: 1916520673}
-  loadGameButton: {fileID: 86353719}
+  ContinueButton: {fileID: 86353719}
+  loadGameButton: {fileID: 1916520673}
 --- !u!224 &1979942523
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3654,7 +3654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDeleteClicked
+      value: OnClearClicked
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -3734,7 +3734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8638395712013118324, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -147
+      value: 28
       objectReference: {fileID: 0}
     - target: {fileID: 8638395712013118324, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3920,7 +3920,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDeleteClicked
+      value: OnClearClicked
       objectReference: {fileID: 0}
     - target: {fileID: 3852555490965879678, guid: 538215973b999de4b9bcf5eae367c241, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

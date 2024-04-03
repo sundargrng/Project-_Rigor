@@ -60,7 +60,8 @@ public class Character : MonoBehaviour, IDataPersistence
         this.maxExperience = data.currentExperienceMax;
         this.currentLevel = data.currentLevel;
 
-        // Other loading logic for your character
+        // Subscribe to events after loading data
+        ExperienceManager.Instance.OnExperienceChange += HandleExperienceChange;
     }
 
     public void SaveData(GameData data)
@@ -69,7 +70,5 @@ public class Character : MonoBehaviour, IDataPersistence
         data.currentExperience = this.currentExperience;
         data.currentExperienceMax = this.maxExperience;
         data.currentLevel = this.currentLevel;
-
-        // Other saving logic for your character
     }
 }
