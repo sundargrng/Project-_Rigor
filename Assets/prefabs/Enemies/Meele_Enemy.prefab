@@ -90,7 +90,6 @@ GameObject:
   - component: {fileID: 7295818507039470893}
   - component: {fileID: 2550953090152407744}
   - component: {fileID: 8340497620993999522}
-  - component: {fileID: 7518723428234419959}
   - component: {fileID: 5248123852296277244}
   m_Layer: 3
   m_Name: Meele_Enemy
@@ -277,6 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02366e6f23e8bd84fbea08f405680c33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 
   currentHealth: 100
   maxhealth: 100
   rb2d: {fileID: 5477166679063557249}
@@ -301,19 +301,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
   - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
   dropForce: 300
---- !u!114 &7518723428234419959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1204956604597314914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eae8716947f44b34895cc90766f21db7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageDiff: 2
 --- !u!114 &5248123852296277244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,10 +314,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  attackRange: 2
-  lineOfSite: 5
-  attackAnimTime: 0.5
+  attackRange: 1.7
+  lineOfSight: 10
+  attackTime: 0
+  enemyDamage: 2
   homePosition: {fileID: 0}
+  players:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1235383618235739416
 GameObject:
   m_ObjectHideFlags: 0
@@ -559,7 +550,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.044139057, y: -1.0312262}
+  m_Offset: {x: -0.03330183, y: -0.3499298}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -570,7 +561,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.78016037, y: 0.63484955}
+  m_Size: {x: 1.1230555, y: 0.585865}
   m_EdgeRadius: 0
 --- !u!1 &2229257630407851608
 GameObject:
@@ -955,8 +946,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42525002, y: -0.6525, z: 0}
-    m_Extent: {x: 1.17765, y: 0.95489997, z: 0}
+    m_Center: {x: 0.43205002, y: -0.6604, z: 0}
+    m_Extent: {x: 1.1767501, y: 0.9523, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1041,7 +1032,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.0231376, y: 0.020883799}
+  m_Offset: {x: -0.3394575, y: -0.07545471}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1052,7 +1043,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.75681543, y: 0.71560144}
+  m_Size: {x: 0.5805607, y: 1.2}
   m_EdgeRadius: 0
 --- !u!1 &6279800118460718746
 GameObject:
@@ -1118,7 +1109,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.018237203, y: 1.2574272}
+  m_Offset: {x: -0.017861843, y: 0.3559227}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1129,7 +1120,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.76289254, y: 0.5206413}
+  m_Size: {x: 1.2118788, y: 0.58449936}
   m_EdgeRadius: 0
 --- !u!1 &6458961184439617595
 GameObject:
@@ -1195,7 +1186,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.0024163, y: 0.06965828}
+  m_Offset: {x: 0.3954034, y: -0.0414629}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1206,5 +1197,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.80112624, y: 0.6829548}
+  m_Size: {x: 0.579299, y: 1.2}
   m_EdgeRadius: 0

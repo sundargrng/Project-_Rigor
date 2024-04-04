@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 
 public class WarriorController : MonoBehaviour, IDataPersistence
 {
@@ -15,20 +16,13 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     private float speed;
 
     private float attackTime = 0.5f;
-    private float attackCountDOwn;
+    private float attackCountdown;
     private bool isAttacking;
 
-    public GameObject AttackPointUP;
-    public GameObject AttackPointLeft;
-    public GameObject AttackPointRight;
-    public GameObject AttackPointDown;
-    
+    public GameObject AttackPoint;
     public float AttackPointRadius;
-    
     public LayerMask enemies;
-
     public int playerDamage;
-    
 
     // Start is called before the first frame update
     void Start()
@@ -47,7 +41,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             SceneManager.LoadSceneAsync("Main Menu");
         }
 
-       if(DialogManager.isActive == true)
+        if (DialogManager.isActive == true)
         {
             return;
         }
@@ -61,13 +55,18 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             return; // Exit the Update method
         }
 
+        if (AreaTransitions.inputDisable == true)
+        {
+            return;
+        }
+
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
 
         animator.SetFloat("moveX", rb.velocity.x);
         animator.SetFloat("moveY", rb.velocity.y);
 
-        
-        if (Input.GetAxisRaw("Horizontal") ==1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+
+        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
         {
             animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
@@ -76,74 +75,48 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         if (isAttacking)
         {
             rb.velocity = Vector2.zero;
-            attackCountDOwn -= Time.deltaTime;
-            if (attackCountDOwn < 0)
+            attackCountdown -= Time.deltaTime;
+            if (attackCountdown < 0)
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
             }
         }
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
-            attackCountDOwn = attackTime;
-            animator.SetBool("isAttacking", true);
-            isAttacking = true;
+            Attack();
         }
     }
 
-    public void attackUP()
+    private IEnumerator AttackWithDelay()
     {
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointUP.transform.position, AttackPointRadius, enemies);
+        // Wait for the specified delay before attacking
+        yield return new WaitForSeconds(0.4f);
 
-        foreach (Collider2D e in enemy)
-        {
-            Debug.Log("Enemy is Hit");
-            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
-        }
-    }
+        // Get the direction the player is facing
+        Vector2 attackDirection = new Vector2(animator.GetFloat("lastMoveX"), animator.GetFloat("lastMoveY")).normalized;
 
-    public void attackDown()
-    {
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointDown.transform.position, AttackPointRadius, enemies);
+        // Calculate attack point position based on direction
+        Vector2 attackPosition = (Vector2)transform.position + attackDirection * AttackPointRadius;
 
-        foreach (Collider2D e in enemy)
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPosition, AttackPointRadius, enemies);
+
+        foreach (Collider2D enemy in enemiesHit)
         {
             Debug.Log("Enemy is Hit");
-            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            enemy.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
         }
     }
 
-    public void attackLeft()
+    private void Attack()
     {
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointLeft.transform.position, AttackPointRadius, enemies);
+        attackCountdown = attackTime;
+        animator.SetBool("isAttacking", true);
+        isAttacking = true;
 
-        foreach (Collider2D e in enemy)
-        {
-            Debug.Log("Enemy is Hit");
-            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
-        }
-    }
-
-    public void attackRight()
-    {
-        Collider2D[] enemy = Physics2D.OverlapCircleAll(AttackPointRight.transform.position, AttackPointRadius, enemies);
-
-        foreach (Collider2D e in enemy)
-        {
-            Debug.Log("Enemy is Hit");
-            e.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
-        }
-    }
-
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(AttackPointUP.transform.position, AttackPointRadius);
-        Gizmos.DrawWireSphere(AttackPointLeft.transform.position, AttackPointRadius);
-        Gizmos.DrawWireSphere(AttackPointRight.transform.position, AttackPointRadius);
-        Gizmos.DrawWireSphere(AttackPointDown.transform.position, AttackPointRadius);
+        // Start the coroutine for attacking with a delay
+        StartCoroutine(AttackWithDelay());
     }
 
     public void LoadData(GameData data)
@@ -155,21 +128,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     {
         data.playerPosition = this.transform.position;
     }
-
-    /*private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "PlayerKB")
-        {
-            Vector2 difference = transform.position - other.transform.position;
-            transform.position = new Vector2(transform.position.x + difference.x, transform.position.y + difference.y);
-        }
-
-        if (other.gameObject.tag == "arrow")
-        {
-            Destroy(other.gameObject);
-        }
-    }*/
-
 
     private void OnTriggerEnter2D(Collider2D other)
     {

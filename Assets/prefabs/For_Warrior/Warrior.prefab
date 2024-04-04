@@ -198,7 +198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8608963121392920386
 Transform:
   m_ObjectHideFlags: 0
@@ -521,6 +521,7 @@ Transform:
   - {fileID: 8608963121392920386}
   - {fileID: 1662430837888120192}
   - {fileID: 7578930717381629707}
+  - {fileID: 3838900540743597364}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6447375062478923643
@@ -588,11 +589,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 150
-  AttackPointUP: {fileID: 0}
-  AttackPointLeft: {fileID: 0}
-  AttackPointRight: {fileID: 0}
-  AttackPointDown: {fileID: 0}
-  AttackPointRadius: 0.65
+  AttackPoint: {fileID: 8750327407116031416}
+  AttackPointRadius: 0.5
   enemies:
     serializedVersion: 2
     m_Bits: 8
@@ -657,7 +655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ef67e1dac39ff7468078f3597bfb503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 1
+  currentHealth: 100000000
   maxHealth: 1
   flashTime: 0.5
 --- !u!61 &4224937264235434003
@@ -786,8 +784,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4261, y: -0.66305, z: 0}
-    m_Extent: {x: 0.5067, y: 0.36715, z: 0}
+    m_Center: {x: 0.4203, y: -0.65735, z: 0}
+    m_Extent: {x: 0.5053, y: 0.36735004, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -824,7 +822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7784456984164096325
 Transform:
   m_ObjectHideFlags: 0
@@ -891,7 +889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1662430837888120192
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2035597909477206324
 Transform:
   m_ObjectHideFlags: 0
@@ -1100,3 +1098,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageTaken: 2
+--- !u!1 &8750327407116031416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3838900540743597364}
+  m_Layer: 6
+  m_Name: AP
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3838900540743597364
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750327407116031416}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.288, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1869351267352685438}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

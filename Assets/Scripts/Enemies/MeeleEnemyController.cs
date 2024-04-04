@@ -1,82 +1,103 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeeleEnemyController : MonoBehaviour
 {
-    public float speed;
-    
-    public float attackRange;
-    public float lineOfSite;
+    public float speed = 5f;
+    public float attackRange = 1.5f;
+    public float lineOfSight = 10f;
+    [SerializeField] private float attackTime;
+    public int enemyDamage = 10;
 
-    private float attackCoolDown;
-    public float attackAnimTime;
-
+    private Transform player;
     private Animator animator;
+    private Rigidbody2D rb;
+    private float attackAnimationTimer = 0f; // Timer to track the attack animation time
 
     public Transform homePosition;
-    private Transform player;
 
-    // Start is called before the first frame update
-    void Start()
+    public LayerMask players;
+
+    private void Start()
     {
-        player = FindAnyObjectByType<WarriorController>().transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        animator.SetBool("inRange", true);
+        if (player == null)
+            return;
 
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
 
-        if (distanceFromPlayer < lineOfSite && distanceFromPlayer > attackRange)
+        if (distanceFromPlayer < lineOfSight && distanceFromPlayer > attackRange)
         {
+            // Player is within line of sight but outside attack range, move towards the player
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.velocity = direction * speed;
             animator.SetBool("inRange", true);
-            animator.SetFloat("moveX", (player.position.x - this.transform.position.x));
-            animator.SetFloat("moveY", (player.position.y - this.transform.position.y));
-            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
+            animator.SetFloat("moveX", direction.x);
+            animator.SetFloat("moveY", direction.y);
         }
 
-        attackCoolDown += Time.deltaTime;
-
-        if (distanceFromPlayer < attackRange && attackCoolDown > attackAnimTime)
+        if (distanceFromPlayer <= attackRange)
         {
-            attackCoolDown = 0;
-
             animator.SetBool("isDamaging", true);
-            animator.SetFloat("X", (player.position.x - this.transform.position.x));
-            animator.SetFloat("Y", (player.position.y - this.transform.position.y));
-            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
+            rb.velocity = Vector2.zero;
+            animator.SetFloat("X", (player.position.x - transform.position.x));
+            animator.SetFloat("Y", (player.position.y - transform.position.y));
+            Attack();
         }
 
-        if (distanceFromPlayer > attackRange && distanceFromPlayer < lineOfSite)
+        if (distanceFromPlayer > attackRange && distanceFromPlayer < lineOfSight)
         {
+            Vector2 direction = (player.position - transform.position).normalized;
+            rb.velocity = direction * speed;
             animator.SetBool("isDamaging", false);
-            animator.SetFloat("moveX", (player.position.x - this.transform.position.x));
-            animator.SetFloat("moveY", (player.position.y - this.transform.position.y));
-            transform.position = Vector2.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
+            animator.SetFloat("moveX", direction.x);
+            animator.SetFloat("moveY", direction.y);
         }
 
-        if (distanceFromPlayer > lineOfSite)
+        if (distanceFromPlayer > lineOfSight)
         {
-            animator.SetBool("isDamaging", false);
-            animator.SetFloat("moveX", (homePosition.position.x - this.transform.position.x));
-            animator.SetFloat("moveY", (homePosition.position.y - this.transform.position.y));
-            transform.position = Vector2.MoveTowards(this.transform.position, homePosition.position, speed * Time.deltaTime);
+            // Player is out of sight, return to home position and patrol
+            Vector2 directionToHome = (homePosition.position - transform.position).normalized;
+            rb.velocity = directionToHome * speed;
 
-            if (Vector2.Distance(this.transform.position, homePosition.position) == 0)
+            animator.SetBool("isDamaging", false); // Ensure isDamaging is false when out of attack range
+            animator.SetFloat("moveX", directionToHome.x);
+            animator.SetFloat("moveY", directionToHome.y);
+
+            // If enemy reaches home position, reset its position and stop patrolling
+            if (Vector2.Distance(transform.position, homePosition.position) < 1f)
             {
                 animator.SetBool("inRange", false);
+                transform.position = homePosition.position;
+                rb.velocity = Vector2.zero;
             }
         }
     }
 
-    private void OnDrawGizmosSelected()
+    private void Attack()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lineOfSite);
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        // Increment the attack animation timer
+        attackAnimationTimer += Time.deltaTime;
+
+        // Check if the attack animation time has reached 1 second
+        if (attackAnimationTimer >= attackTime)
+        {
+            attackAnimationTimer = 0; // Reset the timer
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, players);
+            foreach (Collider2D hit in hits)
+            {
+                hit.GetComponent<HealthManager>().damagePlayer(enemyDamage);
+            }
+        }
+    }
+
+    public void SetPlayer(Transform newPlayer)
+    {
+        player = newPlayer;
     }
 }

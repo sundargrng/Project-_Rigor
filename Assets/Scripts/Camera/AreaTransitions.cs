@@ -17,7 +17,9 @@ public class AreaTransitions : MonoBehaviour
 
     private bool inTransition = false;
 
-    //public static bool inputDisable = false;
+    public static bool inputDisable = false;
+
+    public Rigidbody2D pRB;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,17 @@ public class AreaTransitions : MonoBehaviour
         cam = Camera.main;
         camController = Camera.main.GetComponent<CameraController>();
         fadeImage = GameObject.Find("FadeImage").GetComponent<Image>(); // Update "FadeImage" with the name of your image object
+
+        // Find the GameObject with the "Player" tag and get its Animator component
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            pRB = player.GetComponent<Rigidbody2D>();
+        }
+        else
+        {
+            Debug.LogError("Could not find GameObject with tag 'Player'");
+        }
     }
 
     // Update is called once per frame
@@ -39,7 +52,8 @@ public class AreaTransitions : MonoBehaviour
         {
             inTransition = true;
 
-            //inputDisable = true;
+            inputDisable = true;
+            pRB.velocity = Vector3.zero;
 
             // Show black screen
             fadeImage.color = new Color(0, 0, 0, 1f);
@@ -71,7 +85,7 @@ public class AreaTransitions : MonoBehaviour
         LeanTween.alpha(fadeImage.rectTransform, 0f, 0.5f);
         inTransition = false;
 
-        //inputDisable = false;
+        inputDisable = false;
         
     }
 }
