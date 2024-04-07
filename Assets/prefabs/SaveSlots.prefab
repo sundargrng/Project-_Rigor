@@ -186,9 +186,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b3e5b4e59d7914c93b356519305af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstSelected: {fileID: 2979830670630951674}
+  firstSelected: {fileID: 1625592493083296280}
   mainMenu: {fileID: 0}
   backButton: {fileID: 5811085319258288242}
+  confirmationPopupMenu: {fileID: 0}
 --- !u!1 &2979830670630951674
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +342,8 @@ MonoBehaviour:
   hasDataContent: {fileID: 3322336062545962622}
   playerLevel: {fileID: 124891882956594145}
   deathCount: {fileID: 1213224721130771313}
+  percentageComplete: {fileID: 0}
+  deleteButton: {fileID: 0}
 --- !u!1 &3322336062545962622
 GameObject:
   m_ObjectHideFlags: 0

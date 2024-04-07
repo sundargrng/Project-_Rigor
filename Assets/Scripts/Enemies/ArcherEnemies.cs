@@ -18,7 +18,7 @@ public class ArcherEnemies : MonoBehaviour
 
     private Animator animator;
 
-    public Transform[] patrolPositions;
+    [SerializeField] private Transform[] patrolPositions;
     private int targetPoint;
 
     private bool isWaitingAtPatrolPoint = false;
@@ -28,6 +28,9 @@ public class ArcherEnemies : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         targetPoint = 0;
+
+        // Ignore collisions with the "Enemy" layer
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
     }
 
     void Update()

@@ -1,10 +1,11 @@
 using UnityEngine;
+using System.Collections;
 
 public class MeeleEnemyController : MonoBehaviour
 {
     public float speed = 5f;
-    public float attackRange = 1.5f;
-    public float lineOfSight = 10f;
+    public float attackRange;
+    public float lineOfSight;
     [SerializeField] private float attackTime;
     public int enemyDamage = 10;
 
@@ -17,11 +18,18 @@ public class MeeleEnemyController : MonoBehaviour
 
     public LayerMask players;
 
+    [SerializeField] private Transform[] patrolPositions;
+    private int currentPatrolPoint = 0; // Index of the current patrol point
+
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+
+        // Ignore collisions with the "Enemy" layer
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
     }
 
     private void Update()
@@ -47,7 +55,8 @@ public class MeeleEnemyController : MonoBehaviour
             rb.velocity = Vector2.zero;
             animator.SetFloat("X", (player.position.x - transform.position.x));
             animator.SetFloat("Y", (player.position.y - transform.position.y));
-            Attack();
+
+            StartCoroutine(AttackAfter());
         }
 
         if (distanceFromPlayer > attackRange && distanceFromPlayer < lineOfSight)
@@ -61,22 +70,37 @@ public class MeeleEnemyController : MonoBehaviour
 
         if (distanceFromPlayer > lineOfSight)
         {
-            // Player is out of sight, return to home position and patrol
-            Vector2 directionToHome = (homePosition.position - transform.position).normalized;
-            rb.velocity = directionToHome * speed;
+            // Player is out of sight, patrol between points
+            Vector2 targetPatrolPoint = patrolPositions[currentPatrolPoint].position;
+            Vector2 directionToPatrolPoint = (targetPatrolPoint - (Vector2)transform.position).normalized;
+            rb.velocity = directionToPatrolPoint * speed;
 
-            animator.SetBool("isDamaging", false); // Ensure isDamaging is false when out of attack range
-            animator.SetFloat("moveX", directionToHome.x);
-            animator.SetFloat("moveY", directionToHome.y);
+            animator.SetBool("inRange", true);
+            animator.SetFloat("moveX", directionToPatrolPoint.x);
+            animator.SetFloat("moveY", directionToPatrolPoint.y);
 
-            // If enemy reaches home position, reset its position and stop patrolling
-            if (Vector2.Distance(transform.position, homePosition.position) < 1f)
+            // Check if reached the current patrol point
+            if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.1f)
             {
-                animator.SetBool("inRange", false);
-                transform.position = homePosition.position;
-                rb.velocity = Vector2.zero;
+                // Move to the next patrol point
+                IncreasePatrolPointIndex();
             }
         }
+    }
+
+    private void IncreasePatrolPointIndex()
+    {
+        currentPatrolPoint++;
+        if (currentPatrolPoint >= patrolPositions.Length)
+        {
+            currentPatrolPoint = 0; // Wrap around to the first patrol point if index exceeds array length
+        }
+    }
+
+    private IEnumerator AttackAfter()
+    {
+        yield return new WaitForSeconds(0.6F);
+        Attack();
     }
 
     private void Attack()

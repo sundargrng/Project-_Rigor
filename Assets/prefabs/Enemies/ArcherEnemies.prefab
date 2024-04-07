@@ -155,8 +155,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42674997, y: -0.65525, z: 0}
-    m_Extent: {x: 1.17505, y: 0.95485, z: 0}
+    m_Center: {x: 0.42264998, y: -0.66655004, z: 0}
+    m_Extent: {x: 1.17125, y: 0.95725, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -658,12 +658,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.5
-  attackRange: 5
+  attackRange: 7
   shootingRange: {fileID: 4981776190594260484}
   arrow: {fileID: 7934275435922575443, guid: 098545529d842224abdca7a749ff36e8, type: 3}
-  lineOfSite: 6
+  lineOfSite: 20
   attackAnimTime: 1.5
-  homePosition: {fileID: 0}
+  patrolPositions: []
 --- !u!1 &5633543393092748449
 GameObject:
   m_ObjectHideFlags: 0

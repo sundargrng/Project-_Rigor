@@ -9,6 +9,7 @@ public class GameData
 
     public int deathCount;
     public SerializableTypeDictionary<string, bool> enemiesDefeated;
+    public SerializableTypeDictionary<string, bool> objectives; // New: Game objectives dictionary
     public Vector3 playerPosition;
 
     // New camera properties
@@ -31,6 +32,7 @@ public class GameData
         this.deathCount = 0;
         this.playerPosition = Vector3.zero;
         enemiesDefeated = new SerializableTypeDictionary<string, bool>();
+        objectives = new SerializableTypeDictionary<string, bool>();
 
         // Initialize camera properties
         this.cameraPosition = Vector3.zero;
@@ -56,8 +58,17 @@ public class GameData
             }
         }
 
+        int completedObjectives = 0;
+        foreach (bool completed in objectives.Values)
+        {
+            if (completed)
+            {
+                completedObjectives++;
+            }
+        }
+
         int percentageCompleted = -1; // Default value in case enemiesDefeated is empty
-        if (enemiesDefeated.Count != 0)
+        if (enemiesDefeated.Count != 0 && objectives.Count !=0)
         {
             percentageCompleted = (totalDefeated * 100 / enemiesDefeated.Count);
         }
