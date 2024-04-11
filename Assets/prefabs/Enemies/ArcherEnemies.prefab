@@ -155,8 +155,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42264998, y: -0.66655004, z: 0}
-    m_Extent: {x: 1.17125, y: 0.95725, z: 0}
+    m_Center: {x: 0.43375003, y: -0.66359997, z: 0}
+    m_Extent: {x: 1.17575, y: 0.9597, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -556,6 +556,7 @@ MonoBehaviour:
   receiver: {fileID: 2091681256863299365}
   damagePopUpPrefab: {fileID: 8823999113510876231, guid: 6db2a7456374f2f48b44157d82ea8e5b, type: 3}
   healthBar: {fileID: 3503403804485394617}
+  expAmount: 100
 --- !u!61 &6431856427768436774
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
     private bool defeated = false;
 
-    int expAmount = 100;
+    [SerializeField] private int expAmount;
 
 
     // Start is called before the first frame update
@@ -144,6 +144,8 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         //healthBar.gameObject.SetActive(false);
         GetComponent<LootBag>().SpawnLoot(transform.position);
         deadFr = true;
+
+        defeated = true;
         
         animator.SetTrigger("isDead");
         StartCoroutine(DisableObjectAfterAnimation());
@@ -156,7 +158,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
         // Set the object inactive after the fade is complete
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
-        defeated = true;
+        
         gameObject.SetActive(false);
         ExperienceManager.Instance.AddExperience(expAmount);
     }

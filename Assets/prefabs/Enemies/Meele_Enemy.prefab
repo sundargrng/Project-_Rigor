@@ -280,6 +280,7 @@ MonoBehaviour:
   receiver: {fileID: 5772894093304711249}
   damagePopUpPrefab: {fileID: 8823999113510876231, guid: 6db2a7456374f2f48b44157d82ea8e5b, type: 3}
   healthBar: {fileID: 1978280803277930161}
+  expAmount: 100
 --- !u!114 &8340497620993999522
 MonoBehaviour:
   m_ObjectHideFlags: 0

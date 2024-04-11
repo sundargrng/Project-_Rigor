@@ -30,6 +30,7 @@ public class MeeleEnemyController : MonoBehaviour
 
         // Ignore collisions with the "Enemy" layer
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Player"));
     }
 
     private void Update()
@@ -51,8 +52,9 @@ public class MeeleEnemyController : MonoBehaviour
 
         if (distanceFromPlayer <= attackRange)
         {
-            animator.SetBool("isDamaging", true);
+            
             rb.velocity = Vector2.zero;
+            animator.SetBool("isDamaging", true);
             animator.SetFloat("X", (player.position.x - transform.position.x));
             animator.SetFloat("Y", (player.position.y - transform.position.y));
 
@@ -100,28 +102,26 @@ public class MeeleEnemyController : MonoBehaviour
     private IEnumerator AttackAfter()
     {
         yield return new WaitForSeconds(0.6F);
+        
         Attack();
     }
 
     private void Attack()
     {
+        
         // Increment the attack animation timer
         attackAnimationTimer += Time.deltaTime;
 
-        // Check if the attack animation time has reached 1 second
-        if (attackAnimationTimer >= attackTime)
+        // attaclTime is set in the editor which is the time duration for this.gameObject's attack animation time
+        // when the attackAnimationTimer is greater than attackTime the player takes damage
+        if (attackAnimationTimer > attackTime)
         {
-            attackAnimationTimer = 0; // Reset the timer
+            attackAnimationTimer = 0; // Reset the timer for the damage to loop
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, players);
             foreach (Collider2D hit in hits)
             {
                 hit.GetComponent<HealthManager>().damagePlayer(enemyDamage);
             }
         }
-    }
-
-    public void SetPlayer(Transform newPlayer)
-    {
-        player = newPlayer;
     }
 }

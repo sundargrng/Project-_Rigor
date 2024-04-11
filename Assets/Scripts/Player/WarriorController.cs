@@ -119,6 +119,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         StartCoroutine(AttackWithDelay());
     }
 
+
     public void LoadData(GameData data)
     {
         this.transform.position = data.playerPosition;
