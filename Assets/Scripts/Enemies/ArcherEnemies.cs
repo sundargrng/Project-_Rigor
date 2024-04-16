@@ -18,19 +18,20 @@ public class ArcherEnemies : MonoBehaviour
 
     private Animator animator;
 
-    [SerializeField] private Transform[] patrolPositions;
+    public Transform[] patrolPositions;
     private int targetPoint;
 
     private bool isWaitingAtPatrolPoint = false;
+    private bool isShooting = false;
+
+    private Rigidbody2D rb;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         animator = GetComponent<Animator>();
         targetPoint = 0;
-
-        // Ignore collisions with the "Enemy" layer
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -43,22 +44,31 @@ public class ArcherEnemies : MonoBehaviour
             {
                 // Move towards the player
                 animator.SetBool("inRange", true);
+                animator.SetBool("inAttackRange", false);
                 animator.SetFloat("walkX", (player.position.x - transform.position.x));
                 animator.SetFloat("walkY", (player.position.y - transform.position.y));
                 transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+
+                // Reset shooting flag if player is out of attack range
+                isShooting = false;
             }
 
             attackCoolDown += Time.deltaTime;
 
-            if (distanceFromPlayer < attackRange && attackCoolDown > attackAnimTime)
+            if (distanceFromPlayer < attackRange && attackCoolDown > attackAnimTime && !isShooting)
             {
                 // Attack if within attack range and cooldown is ready
                 attackCoolDown = 0;
+
+                // bug aries when player is attacking the enemy from near that will make the enemy push back and never stop
+                // the push is different from the knockback effect 
+                rb.velocity = Vector2.zero; // when player is near the enemy to attack, the enemy wont be moved 
                 animator.SetBool("inAttackRange", true);
                 animator.SetFloat("lookX", (player.position.x - transform.position.x));
                 animator.SetFloat("lookY", (player.position.y - transform.position.y));
+                isShooting = true;
 
-                Instantiate(arrow, shootingRange.transform.position, Quaternion.identity);
+                StartCoroutine(WaitForArrowAnimation());
             }
 
             if (distanceFromPlayer > attackRange && distanceFromPlayer < lineOfSite)
@@ -73,23 +83,49 @@ public class ArcherEnemies : MonoBehaviour
 
             if (distanceFromPlayer > lineOfSite)
             {
-                // Patrol towards patrol points when player is out of sight
-                animator.SetBool("inAttackRange", false);
-                animator.SetBool("inRange", true);
-
-                Vector2 targetPatrolPoint = patrolPositions[targetPoint].position;
-                animator.SetFloat("walkX", (targetPatrolPoint.x - transform.position.x));
-                animator.SetFloat("walkY", (targetPatrolPoint.y - transform.position.y));
-                transform.position = Vector2.MoveTowards(transform.position, targetPatrolPoint, speed * Time.deltaTime);
-
-                // Check if reached the current patrol point
-                if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.1f)
+                // Check if there are patrol positions available
+                if (patrolPositions != null && patrolPositions.Length > 0)
                 {
-                    // Start waiting at patrol point
-                    StartCoroutine(WaitAtPatrolPoint());
+                    // Patrol towards patrol points when player is out of sight
+                    animator.SetBool("inAttackRange", false);
+                    animator.SetBool("inRange", true);
+
+                    Vector2 targetPatrolPoint = patrolPositions[targetPoint].position;
+                    animator.SetFloat("walkX", (targetPatrolPoint.x - transform.position.x));
+                    animator.SetFloat("walkY", (targetPatrolPoint.y - transform.position.y));
+                    transform.position = Vector2.MoveTowards(transform.position, targetPatrolPoint, speed * Time.deltaTime);
+
+                    // Check if reached the current patrol point
+                    if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.1f)
+                    {
+                        // Start waiting at patrol point
+                        StartCoroutine(WaitAtPatrolPoint());
+                    }
+                }
+                else
+                {
+                    // No patrol points available, set inRange to false
+                    animator.SetBool("inRange", false);
                 }
             }
         }
+    }
+
+    IEnumerator WaitForArrowAnimation()
+    {
+        yield return new WaitForSeconds(attackAnimTime);
+
+        StartCoroutine(ShootArrow());
+
+        yield return new WaitForSeconds(0.2f);
+        isShooting = false;
+    }
+
+    IEnumerator ShootArrow()
+    {
+        Instantiate(arrow, shootingRange.transform.position, Quaternion.identity);
+
+        yield return new WaitForSeconds(0.1f);
     }
 
     IEnumerator WaitAtPatrolPoint()

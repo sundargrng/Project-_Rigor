@@ -31,7 +31,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Data Persistence Manager already exists. The newest one was destroyed.");
+            Debug.Log("Data Persistence Manager already exists. The newest one was destroyed.");
             Destroy(this.gameObject);
             return;
         }
@@ -63,6 +63,11 @@ public class DataPersistenceManager : MonoBehaviour
     {
         this.dataPersistenceObject = FindAllDataPersistenceObjects();
         LoadGame();
+    }
+
+    public void OnSceneUnloaded(Scene scene)
+    {
+        SaveGame();
     }
 
     public void ChangeSelectedProfileId(string newProfileId)

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class arrowFly : MonoBehaviour
@@ -8,6 +7,8 @@ public class arrowFly : MonoBehaviour
     public float speed;
     Rigidbody2D arrowRB;
     public int arrowDamage;
+
+    public float destroyTime; // Time in seconds before the arrow is destroyed
 
     // Start is called before the first frame update
     void Start()
@@ -18,16 +19,17 @@ public class arrowFly : MonoBehaviour
         arrowRB.velocity = new Vector2(moveDir.x, moveDir.y);
 
         float rotate = Mathf.Atan2(-moveDir.y, -moveDir.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, 0, rotate +45);
-        Destroy(this.gameObject, 4);
+        transform.rotation = Quaternion.Euler(0, 0, rotate + 45);
+
+        // Destroy the arrow after a specified time
+        Destroy(this.gameObject, destroyTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
 
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

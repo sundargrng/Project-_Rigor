@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     public void NextLevel()
     {
         StartCoroutine(LoadLevel());
@@ -34,5 +34,4 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         animator.SetTrigger("Start");
     }
-
 }

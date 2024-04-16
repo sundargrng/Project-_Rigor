@@ -13,15 +13,23 @@ public class CameraController : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
         //transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+        // Get the current position of the camera
+        Vector3 currentPosition = transform.position;
 
-        if(transform.position != target.position)
+        // Set the z-coordinate to -10 to ensure it remains fixed
+        currentPosition.z = -10f;
+
+        // Update the camera's position to maintain the fixed z-coordinate
+        transform.position = currentPosition;
+
+        if (transform.position != target.position)
         {
             Vector3 targetPosition = new Vector3(target.position.x, target.position.y, transform.position.z);
 

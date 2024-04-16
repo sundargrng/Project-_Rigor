@@ -21,13 +21,11 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public Text keyCountText; // Text element to display key count
     private int keyCount = 0; // Variable to store key count
 
+    public Text enemiesDefeatedText; // Text element to display defeated enemies count
+    public int enemiesToDisableBarrier = 15; // Number of enemies needed to disable the barrier
+    private int enemiesDefeated = 0; // Variable to store defeated enemies count
+
     private SaveSlot saveSlot;
-
-    public Text roundText;
-    public Text completionText;
-
-    private Coroutine roundTextCoroutine;
-    private Coroutine completionTextCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -36,89 +34,8 @@ public class UIManager : MonoBehaviour, IDataPersistence
         playerStat = FindObjectOfType<Character>();
         keyCountText.gameObject.SetActive(false); // Initially hide the key count UI
 
-        // Find RoundBasedWaveSpawner in the scene
-        RoundBasedWaveSpawner waveSpawner = FindObjectOfType<RoundBasedWaveSpawner>();
-
-        if (waveSpawner != null)
-        {
-            // Subscribe to the OnRoundStart event
-            waveSpawner.OnRoundStart.AddListener(OnRoundStart);
-            waveSpawner.OnAllRoundsCompleted.AddListener(OnAllRoundsCompleted);
-        }
-
-        // Hide the completionText at start
-        completionText.gameObject.SetActive(false);
-    }
-
-    void OnRoundStart(int roundNumber)
-    {
-        if (roundTextCoroutine != null)
-        {
-            StopCoroutine(roundTextCoroutine);
-        }
-
-        // Update round text to display the current round number
-        roundText.text = "Round: " + roundNumber;
-        roundText.gameObject.SetActive(true);
-
-        // Start coroutine to fade out the round text after a short delay
-        roundTextCoroutine = StartCoroutine(FadeOutRoundText());
-    }
-
-    IEnumerator FadeOutRoundText()
-    {
-        // Wait for 1 second before fading out
-        yield return new WaitForSeconds(1f);
-
-        // Fade out the round text over time
-        float fadeDuration = 1f;
-        float timer = 0f;
-
-        while (timer < fadeDuration)
-        {
-            Color textColor = roundText.color;
-            textColor.a = Mathf.Lerp(1f, 0f, timer / fadeDuration);
-            roundText.color = textColor;
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        roundText.gameObject.SetActive(false); // Deactivate round text after fading out
-    }
-
-    private void OnAllRoundsCompleted()
-    {
-        if (completionTextCoroutine != null)
-        {
-            StopCoroutine(completionTextCoroutine);
-        }
-
-        // Display the completion text
-        completionText.text = "All Rounds Completed";
-        completionText.gameObject.SetActive(true);
-
-        completionTextCoroutine = StartCoroutine(FadeOutRoundCompletion());
-    }
-
-    IEnumerator FadeOutRoundCompletion()
-    {
-        // Wait for 1 second before fading out
-        yield return new WaitForSeconds(3f);
-
-        // Fade out the round text over time
-        float fadeDuration = 1f;
-        float timer = 0f;
-
-        while (timer < fadeDuration)
-        {
-            Color textColor = roundText.color;
-            textColor.a = Mathf.Lerp(1f, 0f, timer / fadeDuration);
-            roundText.color = textColor;
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        completionText.gameObject.SetActive(false); // Deactivate round text after fading out
+        // Initialize enemies defeated text
+        UpdateEnemiesDefeatedText();
     }
 
     // Update is called once per frame
@@ -175,5 +92,34 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public void IncrementKeyCount()
     {
         keyCount++;
+    }
+
+    // Method to increment defeated enemies count
+    public void IncrementEnemiesDefeated()
+    {
+        enemiesDefeated++;
+        UpdateEnemiesDefeatedText();
+
+        // Check if enough enemies have been defeated to disable the barrier
+        if (enemiesDefeated >= enemiesToDisableBarrier)
+        {
+            enemiesDefeatedText.gameObject.SetActive(false); // Disable the UI text element
+            // Call method to disable the barrier (implement this method)
+            DisableSpecificBarrier();
+        }
+    }
+
+    // Method to update defeated enemies text
+    private void UpdateEnemiesDefeatedText()
+    {
+        enemiesDefeatedText.text = "Enemies Defeated: " + enemiesDefeated + " / " + enemiesToDisableBarrier;
+    }
+
+    // Method to disable the specific barrier (implement this method)
+    private void DisableSpecificBarrier()
+    {
+        // Add logic to disable the specific barrier GameObject
+        // Example: specificBarrier.SetActive(false);
+        Debug.Log("Barrier disabled after defeating " + enemiesToDisableBarrier + " enemies.");
     }
 }

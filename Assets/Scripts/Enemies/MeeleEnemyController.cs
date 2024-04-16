@@ -28,8 +28,7 @@ public class MeeleEnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Ignore collisions with the "Enemy" layer
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
+        // Ignore collisions with the "Player" layer
         Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Player"));
     }
 
@@ -52,13 +51,12 @@ public class MeeleEnemyController : MonoBehaviour
 
         if (distanceFromPlayer <= attackRange)
         {
-            
             rb.velocity = Vector2.zero;
             animator.SetBool("isDamaging", true);
             animator.SetFloat("X", (player.position.x - transform.position.x));
             animator.SetFloat("Y", (player.position.y - transform.position.y));
 
-            StartCoroutine(AttackAfter());
+            StartCoroutine(Attack()); // Start the attack coroutine
         }
 
         if (distanceFromPlayer > attackRange && distanceFromPlayer < lineOfSight)
@@ -99,29 +97,29 @@ public class MeeleEnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator AttackAfter()
+    private IEnumerator Attack()
     {
-        yield return new WaitForSeconds(0.6F);
-        
-        Attack();
-    }
-
-    private void Attack()
-    {
-        
         // Increment the attack animation timer
-        attackAnimationTimer += Time.deltaTime;
+        attackAnimationTimer = 0f;
 
-        // attaclTime is set in the editor which is the time duration for this.gameObject's attack animation time
-        // when the attackAnimationTimer is greater than attackTime the player takes damage
-        if (attackAnimationTimer > attackTime)
+        // Wait until the attack animation time (attackTime) is reached
+        while (attackAnimationTimer < attackTime)
         {
-            attackAnimationTimer = 0; // Reset the timer for the damage to loop
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRange, players);
-            foreach (Collider2D hit in hits)
-            {
-                hit.GetComponent<HealthManager>().damagePlayer(enemyDamage);
-            }
+            attackAnimationTimer += Time.deltaTime;
+            yield return null;
         }
+
+        // After attackTime is reached, damage the player if they are within attack range
+        float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
+        if (distanceFromPlayer <= attackRange)
+        {
+            // Damage the player
+            player.GetComponent<HealthManager>().damagePlayer(enemyDamage);
+        }
+
+        // Reset attack animation variables
+        animator.SetBool("isDamaging", false);
+        animator.SetFloat("X", 0f);
+        animator.SetFloat("Y", 0f);
     }
 }

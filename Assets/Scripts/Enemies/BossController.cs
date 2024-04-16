@@ -23,8 +23,8 @@ public class BossController : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
 
-        // Ignore collisions with the "Enemy" layer
-        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Enemy"));
+        // Ignore collisions with the "Player" layer
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Player"));
     }
 
     private void Update()

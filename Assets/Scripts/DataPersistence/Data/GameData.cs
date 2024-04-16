@@ -25,7 +25,6 @@ public class GameData
     public int currentLevel;
 
     public bool isNPCDisabled;
-    public bool enemySpawner;
 
     public GameData()
     {

@@ -489,8 +489,8 @@ GameObject:
   - component: {fileID: 4377305904480634644}
   - component: {fileID: 9222422160238232410}
   - component: {fileID: 6615087479274278409}
-  - component: {fileID: 4224937264235434003}
   - component: {fileID: 4342655332847823674}
+  - component: {fileID: 7186716866341223867}
   m_Layer: 6
   m_Name: Warrior
   m_TagString: Player
@@ -658,8 +658,23 @@ MonoBehaviour:
   currentHealth: 100000000
   maxHealth: 1
   flashTime: 0.5
---- !u!61 &4224937264235434003
-BoxCollider2D:
+--- !u!114 &4342655332847823674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2983457569844435448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1435ded67369474f987a18b011fa68b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentExperience: 0
+  maxExperience: 200
+  currentLevel: 1
+--- !u!70 &7186716866341223867
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -690,34 +705,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.030021667, y: -0.15140522}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.5}
-    newSize: {x: 0.48, y: 0.48}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.57496357, y: 0.6775634}
-  m_EdgeRadius: 0
---- !u!114 &4342655332847823674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2983457569844435448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1435ded67369474f987a18b011fa68b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentExperience: 0
-  maxExperience: 200
-  currentLevel: 1
+  m_Offset: {x: 0, y: -0.14}
+  m_Size: {x: 0.53, y: 0.63}
+  m_Direction: 0
 --- !u!1 &3613665590490178722
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,8 +774,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4203, y: -0.65735, z: 0}
-    m_Extent: {x: 0.5053, y: 0.36735004, z: 0}
+    m_Center: {x: 0.41735, y: -0.662, z: 0}
+    m_Extent: {x: 0.50675, y: 0.36799997, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

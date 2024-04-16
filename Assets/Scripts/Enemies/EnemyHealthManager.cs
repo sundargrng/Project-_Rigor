@@ -46,6 +46,9 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
     [SerializeField] private int expAmount;
 
+    // Reference to UIManager
+    private UIManager uiManager;
+
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +62,9 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         currentHealth = maxhealth;
 
         healthBar = FindObjectOfType<EnemyHpBar>();
+
+        // Find UIManager in the scene
+        uiManager = FindObjectOfType<UIManager>();
     }
 
     // Update is called once per frame
@@ -161,6 +167,12 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         
         gameObject.SetActive(false);
         ExperienceManager.Instance.AddExperience(expAmount);
+
+        // Notify UIManager of defeated enemy
+        if (uiManager != null)
+        {
+            uiManager.IncrementEnemiesDefeated();
+        }
     }
 
     public void LoadData(GameData data)

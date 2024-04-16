@@ -5,9 +5,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
+using UnityEngine.UI;
 
 public class WarriorController : MonoBehaviour, IDataPersistence
 {
+    public Image interactIcon;
+
     private Rigidbody2D rb;
 
     private Animator animator;
@@ -24,17 +27,52 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     public LayerMask enemies;
     public int playerDamage;
 
+    private Vector2 boxSize = new Vector2(0.1f, 1f);
+
+    [SerializeField] private SpawnControlManager spawnManager;
+
+    public float knockbackForce = 200f;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        // Find and assign interactable GameObject
+        GameObject interactable = GameObject.FindGameObjectWithTag("Interact");
+        if (interactable != null)
+        {
+            // Get the Image component from the interactable GameObject
+            interactIcon = interactable.GetComponent<Image>();
+
+            // Deactivate the interactIcon
+            interactIcon.gameObject.SetActive(false);
+        }
+
+        // Find and assign SpawnControlManager if not already assigned
+        if (spawnManager == null)
+        {
+            spawnManager = FindObjectOfType<SpawnControlManager>();
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            // Check if SpawnControlManager reference is set
+            if (spawnManager != null)
+            {
+                // Trigger enemy spawning
+                spawnManager.StartEnemySpawning();
+            }
+
+            CheckInteraction();
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             DataPersistenceManager.instance.SaveGame();
@@ -91,21 +129,31 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private IEnumerator AttackWithDelay()
     {
-        // Wait for the specified delay before attacking
         yield return new WaitForSeconds(0.4f);
 
-        // Get the direction the player is facing
         Vector2 attackDirection = new Vector2(animator.GetFloat("lastMoveX"), animator.GetFloat("lastMoveY")).normalized;
-
-        // Calculate attack point position based on direction
         Vector2 attackPosition = (Vector2)transform.position + attackDirection * AttackPointRadius;
 
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPosition, AttackPointRadius, enemies);
 
         foreach (Collider2D enemy in enemiesHit)
         {
-            Debug.Log("Enemy is Hit");
-            enemy.GetComponent<EnemyHealthManager>().TakeDamage(playerDamage);
+            if (enemy != null)
+            {
+                EnemyHealthManager enemyHealth = enemy.GetComponent<EnemyHealthManager>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.TakeDamage(playerDamage);
+                }
+                else
+                {
+                    Debug.Log("Enemy does not have EnemyHealthManager component.");
+                }
+            }
+            else
+            {
+                Debug.Log("Enemy collider is null.");
+            }
         }
     }
 
@@ -135,6 +183,41 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         if (other.gameObject.tag == "arrow")
         {
             Destroy(other.gameObject);
+        }
+    }
+
+    public void OpenInteractableIcon()
+    {
+        if (interactIcon != null)
+        {
+            interactIcon.gameObject.SetActive(true);
+        }
+    }
+
+
+    public void CloseInteractableIcon()
+    {
+        if (interactIcon != null)
+        {
+            interactIcon.gameObject.SetActive(false);
+        }
+    }
+
+
+    private void CheckInteraction()
+    {
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxSize, 0, Vector2.zero);
+
+        if (hits.Length > 0 )
+        {
+            foreach (RaycastHit2D rc in hits)
+            {
+                if (rc.transform.GetComponent<Interactable>())
+                {
+                    rc.transform.GetComponent<Interactable>().Interact();
+                    return;
+                }
+            }
         }
     }
 }

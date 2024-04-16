@@ -8,7 +8,11 @@ public class Teleportal : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            
+
+            // Transition to the next scene
             SceneController.instance.NextLevel();
         }
     }
 }
+
