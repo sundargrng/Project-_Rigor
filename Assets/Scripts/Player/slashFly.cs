@@ -38,13 +38,22 @@ public class slashFly : MonoBehaviour
             if (enemyHealth != null)
             {
                 enemyHealth.TakingSwordWaves(damage);
-
                 /*GameObject effect = Instantiate(hitEffect, this.transform.position, Quaternion.identity);
                 Destroy(effect, 0.5f);*/
             }
 
             // Destroy the sword slash GameObject after it hits an enemy
             Destroy(gameObject);
+        }
+
+        if (collision.CompareTag("Boss"))
+        {
+            BossHealthManager bossHealth = collision.GetComponent<BossHealthManager>();
+            if (bossHealth != null)
+            {
+                bossHealth.TakeDamage(damage);
+            }
+            Destroy(gameObject); // Destroy the slashFly GameObject after hitting the boss
         }
     }
 }
