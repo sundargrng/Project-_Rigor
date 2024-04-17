@@ -116,7 +116,7 @@ public class BossController : MonoBehaviour
             if (!attackPointCollider.enabled)
             {
                 attackPointCollider.enabled = true;
-                StartAttackCoroutine(); // Start attacking coroutine
+                StartCoroutine(DelayBeforeAttackCoroutine()); // Start delay before attack coroutine
             }
         }
         else
@@ -195,6 +195,13 @@ public class BossController : MonoBehaviour
             animator.SetBool("isDashing", false);
             animator.SetBool("isMoving", true);
         }
+    }
+
+    private IEnumerator DelayBeforeAttackCoroutine()
+    {
+        // Wait for 1 second before starting the attack coroutine
+        yield return new WaitForSeconds(1f);
+        StartAttackCoroutine();
     }
 
     private void StartAttackCoroutine()
