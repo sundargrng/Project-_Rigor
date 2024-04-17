@@ -9,17 +9,20 @@ public class HealthManager : MonoBehaviour, IDataPersistence
 
     private bool hurtFlash;
 
-    [SerializeField]
-    private float flashTime = 0f;
-    private float flashCountDown = 0f;
+
+    [SerializeField] private float flashDuration = 0.2f;
+    [SerializeField] private Color flashColor = new Color(1f, 0f, 0f, 0.5f);
 
     private SpriteRenderer playerSprite;
+    private Rigidbody2D rb; // Reference to the Rigidbody2D component
 
     private Animator playerAnim;
+
     // Start is called before the first frame update
     void Start()
     {
         playerSprite = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component
 
         GameObject animator = GameObject.FindGameObjectWithTag("Player");
         if (animator != null)
@@ -28,52 +31,26 @@ public class HealthManager : MonoBehaviour, IDataPersistence
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (hurtFlash)
-        {
-            if (flashCountDown> flashTime * .99f)
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 0f);
-            }
-            else if (flashCountDown > flashTime * .75f)
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 1f);
-            }
-            else if (flashCountDown > flashTime * .50f)
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 0f);
-            }
-            else if (flashCountDown > flashTime * .25f)
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 1f);
-            }
-            else if (flashCountDown >  0f)
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 0f);
-            }
-            else
-            {
-                playerSprite.color = new Color(playerSprite.color.r, playerSprite.color.g, playerSprite.color.b, 1f);
-                hurtFlash = false;
-            }
-            flashCountDown -= Time.deltaTime;
-        }
-    }
-
 
     public void damagePlayer(int damageTaken)
     {
         currentHealth -= damageTaken;
-        hurtFlash = true;
-        flashCountDown = flashTime;
 
         if (currentHealth <= 0)
         {
             playerAnim.SetTrigger("death");
-            FindObjectOfType<UIManager>().IncrementDeathCount(); // Increment death count
+            FindObjectOfType<UIManager>()?.IncrementDeathCount(); // Increment death count
         }
+
+        StartCoroutine(FlashEffect());
+    }
+
+    private IEnumerator FlashEffect()
+    {
+        // Flash the sprite with the specified color for the duration
+        playerSprite.color = flashColor;
+        yield return new WaitForSeconds(flashDuration);
+        playerSprite.color = Color.white; // Reset to original color
     }
 
     public void LoadData(GameData data)
