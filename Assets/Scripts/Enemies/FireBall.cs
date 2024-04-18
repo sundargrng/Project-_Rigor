@@ -50,6 +50,7 @@ public class FireBall : MonoBehaviour
 
             if (playerHealth != null)
             {
+                SoundManager.PlaySound(SoundType.FIREHURT);
                 playerHealth.damagePlayer(fireDamage);
             }
         }

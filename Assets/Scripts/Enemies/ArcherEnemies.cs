@@ -133,6 +133,7 @@ public class ArcherEnemies : MonoBehaviour
 
     IEnumerator ShootArrow()
     {
+        SoundManager.PlaySound(SoundType.INSTANTIATEARROW);
         Instantiate(arrow, shootingRange.transform.position, Quaternion.identity);
 
         yield return new WaitForSeconds(0.1f);

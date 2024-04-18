@@ -39,6 +39,7 @@ public class arrowFly : MonoBehaviour
 
             if (playerHealth != null)
             {
+                SoundManager.PlaySound(SoundType.ARROWHURT);
                 playerHealth.damagePlayer(arrowDamage);
             }
         }

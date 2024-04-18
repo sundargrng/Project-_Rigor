@@ -33,6 +33,7 @@ public class stoneFly : MonoBehaviour
 
             if (playerHealth != null)
             {
+                SoundManager.PlaySound(SoundType.STONEHURT);
                 playerHealth.damagePlayer(stoneDamage);
             }
 

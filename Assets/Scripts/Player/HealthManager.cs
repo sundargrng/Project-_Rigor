@@ -35,7 +35,6 @@ public class HealthManager : MonoBehaviour, IDataPersistence
     public void damagePlayer(int damageTaken)
     {
         currentHealth -= damageTaken;
-
         if (currentHealth <= 0)
         {
             playerAnim.SetTrigger("death");

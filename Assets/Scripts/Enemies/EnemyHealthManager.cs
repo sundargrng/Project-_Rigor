@@ -80,6 +80,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
     {
         if (currentHealth > 0 && !defeated)
         {
+            SoundManager.PlaySound(SoundType.SLASHDAMAGE);
             ShowDamage(damage.ToString());
             currentHealth -= damage;
             isFlashing = true;
@@ -95,6 +96,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
     public void TakeDamage(int damage)
     {
         defeated = false;
+        SoundManager.PlaySound(SoundType.SWORDDAMAGE);
         currentHealth -= damage;
         isFlashing = true;
         flashCountDown = flashDuration;
@@ -106,7 +108,8 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
         if (currentHealth <= 0)
         {
-            rb2d.velocity = Vector3.zero;
+            // Disable physics interactions by setting Rigidbody2D's isKinematic to true
+            rb2d.isKinematic = true;
             Die();
         }
     }
@@ -152,8 +155,16 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         deadFr = true;
 
         defeated = true;
-        
+        SoundManager.PlaySound(SoundType.ENEMYDEATH);
         animator.SetTrigger("isDead");
+
+        // Disable collider to prevent further interactions
+        Collider2D enemyCollider = GetComponent<Collider2D>();
+        if (enemyCollider != null)
+        {
+            enemyCollider.enabled = false;
+        }
+
         StartCoroutine(DisableObjectAfterAnimation());
     }
 
@@ -165,7 +176,9 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         // Set the object inactive after the fade is complete
         yield return new WaitForSeconds(1.0f); // Wait for the fade duration
         
+
         gameObject.SetActive(false);
+        
         ExperienceManager.Instance.AddExperience(expAmount);
 
         // Notify UIManager of defeated enemy

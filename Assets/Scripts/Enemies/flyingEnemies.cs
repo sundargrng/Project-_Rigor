@@ -68,6 +68,7 @@ public class flyingEnemies : MonoBehaviour
                 animator.SetFloat("mX", (player.position.x - transform.position.x));
                 animator.SetFloat("mY", (player.position.y - transform.position.y));
 
+                SoundManager.PlaySound(SoundType.INSTANTIATEFIREBALL);
                 Instantiate(projectile, throwFrom.transform.position, Quaternion.identity);
             }
 
@@ -77,6 +78,7 @@ public class flyingEnemies : MonoBehaviour
             {
                 wingsCooldown = 0;
                 rb.velocity = Vector2.zero;
+                SoundManager.PlaySound(SoundType.DRAGONDEF);
                 // Call WaveForce() when player is within attack range
                 WaveForce();
                 // Move towards the player but not within attack range

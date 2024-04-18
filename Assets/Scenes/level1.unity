@@ -1891,8 +1891,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4317, y: -0.6628499, z: 0}
-    m_Extent: {x: 1.5187, y: 1.37745, z: 0}
+    m_Center: {x: 0.42145002, y: -0.6639, z: 0}
+    m_Extent: {x: 1.51555, y: 1.3716, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -107462,8 +107462,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4199996, y: -0.6654, z: 0}
-    m_Extent: {x: 8.5564995, y: 8.402599, z: 0}
+    m_Center: {x: 0.4189, y: -0.6600497, z: 0}
+    m_Extent: {x: 8.5476, y: 8.40425, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -134855,8 +134855,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.41640043, y: -0.66415, z: 0}
-    m_Extent: {x: 8.5536995, y: 8.40185, z: 0}
+    m_Center: {x: 0.42159986, y: -0.65540004, z: 0}
+    m_Extent: {x: 8.546101, y: 8.401, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -137089,6 +137089,160 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1987976060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1987976063}
+  - component: {fileID: 1987976062}
+  - component: {fileID: 1987976061}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1987976061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987976060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848200c2ee454ff4d9f3185aa5bdfef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundList:
+  - {fileID: 8300000, guid: 7d3c5ea9431eae34baaabdb2f6d32c67, type: 3}
+  - {fileID: 8300000, guid: 9b61cc24d80d0fc4388a127ad5598e67, type: 3}
+  - {fileID: 8300000, guid: 0b9b1c9e990b4af40b9cff35909243ee, type: 3}
+  - {fileID: 8300000, guid: a3eff6a2b6c3572429d907c74b811751, type: 3}
+  - {fileID: 8300000, guid: 05de074acd5458f458c3ff6950654203, type: 3}
+  - {fileID: 8300000, guid: b9964dd8d8a97ca45b1e4662e405e448, type: 3}
+  - {fileID: 8300000, guid: 2efed1191b798df478323592bc7773d8, type: 3}
+  - {fileID: 8300000, guid: 98fc333aef5631b418392ac2af83d8a2, type: 3}
+  - {fileID: 8300000, guid: 74ff38b4eee74ba4083a423c6775e10f, type: 3}
+  - {fileID: 8300000, guid: 333664fac602e4f449dec8dc0c9157bc, type: 3}
+  - {fileID: 8300000, guid: 25ddec1d08cd4f74aa4ecb23a0d30c9b, type: 3}
+  - {fileID: 8300000, guid: 134b96b08c555e6419f19d65c60fd088, type: 3}
+--- !u!82 &1987976062
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987976060}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1987976063
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987976060}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -47.373753, y: -41.652657, z: -0.7235538}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2001734507
 GameObject:
   m_ObjectHideFlags: 0
@@ -147657,8 +147811,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4214, y: -0.6628, z: 0}
-    m_Extent: {x: 0.5158, y: 0.3645, z: 0}
+    m_Center: {x: 0.421, y: -0.6549, z: 0}
+    m_Extent: {x: 0.5089, y: 0.36400002, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -150963,8 +151117,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42585, y: -0.6573, z: 0}
-    m_Extent: {x: 0.93785, y: 0.7917, z: 0}
+    m_Center: {x: 0.42180002, y: -0.66665, z: 0}
+    m_Extent: {x: 0.9398, y: 0.78865, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -151019,8 +151173,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.42845002, y: -0.6634, z: 0}
-    m_Extent: {x: 0.93585, y: 0.78720003, z: 0}
+    m_Center: {x: 0.42650002, y: -0.65345, z: 0}
+    m_Extent: {x: 0.9329, y: 0.79405, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -151187,6 +151341,10 @@ PrefabInstance:
       propertyPath: homePosition
       value: 
       objectReference: {fileID: 749928688}
+    - target: {fileID: 2404986786278661445, guid: d33cb24f0183c24488bad7d8b9d3543c, type: 3}
+      propertyPath: attackAnimTime
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2404986786278661445, guid: d33cb24f0183c24488bad7d8b9d3543c, type: 3}
       propertyPath: patrolPositions.Array.size
       value: 2
@@ -151565,3 +151723,4 @@ SceneRoots:
   - {fileID: 1547845345104263794}
   - {fileID: 948061283}
   - {fileID: 762965305}
+  - {fileID: 1987976063}

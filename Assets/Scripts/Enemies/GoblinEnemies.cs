@@ -114,7 +114,7 @@ public class GoblinEnemies : MonoBehaviour
     {
         yield return new WaitForSeconds(stoneAnimTime); // Wait for the attack animation duration
 
-        // Check if the player is still within attack range after the animation
+        // Check if the player is still within attack range during the animation
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
         if (distanceFromPlayer <= attackRange)
         {
@@ -143,6 +143,7 @@ public class GoblinEnemies : MonoBehaviour
             Vector2 stoneDirection = Quaternion.Euler(0, 0, spreadAngle) * attackDirection;
 
             // Instantiate the stone with calculated direction
+            SoundManager.PlaySound(SoundType.INSTANTIATESTONE);
             GameObject newStone = Instantiate(stonePrefab, slingShotRange.transform.position, Quaternion.identity);
             newStone.GetComponent<stoneFly>().SetDirection(stoneDirection);
 

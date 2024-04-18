@@ -74,6 +74,7 @@ public class FlyingSlash : MonoBehaviour
 
                     Timer = 0;
                     Instantiate(swordSlash, flyingSlashTransform.position, Quaternion.identity);
+                    SoundManager.PlaySound(SoundType.FLYINGSLASH);
                 }
             }
 

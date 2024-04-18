@@ -112,25 +112,27 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
         if (isAttacking)
         {
+            
             rb.velocity = Vector2.zero;
             attackCountdown -= Time.deltaTime;
             if (attackCountdown < 0)
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
+                
             }
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             Attack();
+            
         }
     }
 
     private IEnumerator AttackWithDelay()
     {
         yield return new WaitForSeconds(0.4f);
-
         Vector2 attackDirection = new Vector2(animator.GetFloat("lastMoveX"), animator.GetFloat("lastMoveY")).normalized;
         Vector2 attackPosition = (Vector2)transform.position + attackDirection * AttackPointRadius;
 
@@ -162,7 +164,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         attackCountdown = attackTime;
         animator.SetBool("isAttacking", true);
         isAttacking = true;
-
+        
         // Start the coroutine for attacking with a delay
         StartCoroutine(AttackWithDelay());
     }
