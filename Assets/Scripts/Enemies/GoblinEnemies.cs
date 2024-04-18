@@ -114,12 +114,22 @@ public class GoblinEnemies : MonoBehaviour
     {
         yield return new WaitForSeconds(stoneAnimTime); // Wait for the attack animation duration
 
-        // Start shooting stones after the animation
-        StartCoroutine(ShootStones());
+        // Check if the player is still within attack range after the animation
+        float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
+        if (distanceFromPlayer <= attackRange)
+        {
+            // Start shooting stones after the animation
+            StartCoroutine(ShootStones());
+        }
+        else
+        {
+            // Player moved out of attack range, reset the shooting state
+            isShooting = false;
+        }
 
-        // a short reloading delay for the enemy
+        // A short reloading delay for the enemy
         yield return new WaitForSeconds(0.5f);
-        isShooting = false;
+        isShooting = false; // Reset isShooting flag
     }
 
     IEnumerator ShootStones()
@@ -139,6 +149,7 @@ public class GoblinEnemies : MonoBehaviour
             yield return new WaitForSeconds(0.1f); // Adjust delay between stone spawns
         }
     }
+
 
     IEnumerator WaitAtPatrolPoint()
     {

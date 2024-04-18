@@ -115,9 +115,19 @@ public class ArcherEnemies : MonoBehaviour
     {
         yield return new WaitForSeconds(attackAnimTime);
 
-        StartCoroutine(ShootArrow());
+        // Check if the player is still within attack range after the animation
+        float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
+        if (distanceFromPlayer <= attackRange)
+        {
+            StartCoroutine(ShootArrow());
+        }
+        else
+        {
+            // Player moved out of attack range, reset the shooting state
+            isShooting = false;
+        }
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(1.4f);
         isShooting = false;
     }
 

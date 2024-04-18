@@ -19,6 +19,7 @@ TagManager:
   - Interact
   - DragonWaves
   - BossHitBox
+  - Boss
   layers:
   - Default
   - TransparentFX

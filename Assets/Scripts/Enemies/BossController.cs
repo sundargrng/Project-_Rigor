@@ -226,30 +226,37 @@ public class BossController : MonoBehaviour
     {
         while (isAttacking)
         {
-            // Deal damage to player using attackDamage
-            HealthManager healthManager = player.GetComponent<HealthManager>();
-            if (healthManager != null)
+            // Check if player is within attack range
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            if (distanceToPlayer <= normalAttackRange)
             {
-                healthManager.damagePlayer(attackDamage);
+                // Deal damage to player using attackDamage
+                HealthManager healthManager = player.GetComponent<HealthManager>();
+                if (healthManager != null)
+                {
+                    healthManager.damagePlayer(attackDamage);
 
-                // Calculate knockback direction
-                Vector2 knockbackDirection = (player.position - transform.position).normalized;
+                    // Calculate knockback direction
+                    Vector2 knockbackDirection = (player.position - transform.position).normalized;
 
-                // Apply knockback force to the player
-                Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-                playerRb.velocity = Vector2.zero;
-                playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
-                Debug.Log("Applied knockback force to player from attack.");
+                    // Apply knockback force to the player
+                    Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+                    playerRb.velocity = Vector2.zero;
+                    playerRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
+                    Debug.Log("Applied knockback force to player from attack.");
 
-                yield return new WaitForSeconds(attackInterval);
+                    yield return new WaitForSeconds(attackInterval);
+                }
             }
             else
             {
-                // Player is null or missing HealthManager component
-                yield break;
+                // Player is out of attack range, stop attacking
+                isAttacking = false;
+                yield break; // Exit the coroutine
             }
         }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
