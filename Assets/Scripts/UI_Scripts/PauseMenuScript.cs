@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenuScript : MonoBehaviour
+public class PauseMenuScript : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private GameObject pauseMenu;
 
@@ -21,6 +21,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void MainMenu()
     {
+        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;
     }
@@ -42,4 +43,16 @@ public class PauseMenuScript : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
     }
+
+    // Implementing IDataPersistence interface methods
+    public void LoadData(GameData data)
+    {
+        // Implement loading logic here if needed
+    }
+
+    public void SaveData(GameData data)
+    {
+        // Implement saving logic here if needed
+    }
+
 }

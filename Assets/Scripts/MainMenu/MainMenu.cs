@@ -17,6 +17,7 @@ public class MainMenu : Menu
     private void Start()
     {
         DisableButtonsDependingOnData();
+        SoundManager.PlayMusic(MusicType.BACKGROUND_MUSIC_1, 1f);
     }
 
     private void DisableButtonsDependingOnData()
@@ -38,13 +39,14 @@ public class MainMenu : Menu
 
         saveSlotsMenu.ActivateMenu(false);
         this.DeactivateMenu();
-
+        SoundManager.PlayMusic(MusicType.BACKGROUND_MUSIC_2, 0.5f);
     }
 
     public void OnLoadGameClicked()
     {
         saveSlotsMenu.ActivateMenu(true);
         this.DeactivateMenu();
+        SoundManager.PlayMusic(MusicType.BACKGROUND_MUSIC_2, 0.5f);
     }
 
     public void OnContinueClicked()

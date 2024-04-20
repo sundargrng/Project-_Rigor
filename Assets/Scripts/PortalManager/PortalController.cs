@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PortalController : MonoBehaviour
 {
@@ -49,7 +50,7 @@ public class PortalController : MonoBehaviour
 
             inputDisable = true;
             pRB.velocity = Vector3.zero;
-
+            //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
             // Show black screen
             fadeImage.color = new Color(0, 0, 0, 1f);
             LeanTween.alpha(fadeImage.rectTransform, 1f, 1f);

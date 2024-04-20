@@ -95,6 +95,7 @@ public class SaveSlotsMenu : Menu
     {
         mainMenu.ActivateMenu();
         this.DeactivateMenu();
+        SoundManager.PlayMusic(MusicType.BACKGROUND_MUSIC_1, 1f);
     }
 
     public void ActivateMenu(bool isLoadingGame)

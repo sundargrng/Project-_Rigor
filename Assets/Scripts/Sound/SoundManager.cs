@@ -19,12 +19,19 @@ public enum SoundType
     FOOTSTEP
 }
 
+public enum MusicType
+{
+    BACKGROUND_MUSIC_1,
+    BACKGROUND_MUSIC_2,
+}
+
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager instance;
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] soundList;
+    [SerializeField] private AudioClip[] musicList;
 
     private void Awake()
     {
@@ -61,6 +68,36 @@ public class SoundManager : MonoBehaviour
         else
         {
             Debug.LogWarning("SoundType " + sound.ToString() + " is not assigned or is out of bounds.");
+        }
+    }
+
+    public static void PlayMusic(MusicType musicType, float volume = 1)
+    {
+        if (instance == null || instance.audioSource == null)
+        {
+            Debug.LogError("SoundManager instance or AudioSource is null.");
+            return;
+        }
+
+        int musicIndex = (int)musicType;
+        if (musicIndex < instance.musicList.Length && instance.musicList[musicIndex] != null)
+        {
+            instance.audioSource.clip = instance.musicList[musicIndex];
+            instance.audioSource.volume = volume;
+            instance.audioSource.loop = true;
+            instance.audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("MusicType " + musicType.ToString() + " is not assigned or is out of bounds.");
+        }
+    }
+
+    public static void StopMusic()
+    {
+        if (instance != null && instance.audioSource != null && instance.audioSource.isPlaying)
+        {
+            instance.audioSource.Stop();
         }
     }
 }
