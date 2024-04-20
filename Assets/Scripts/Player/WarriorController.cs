@@ -33,6 +33,11 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     public float knockbackForce = 200f;
 
+    // Reference to the PauseMenuScript (assigned in the Unity Editor)
+    [SerializeField] private PauseMenuScript pauseMenuScript;
+
+    private bool isPaused = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,32 +62,10 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         }
     }
 
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            // Check if SpawnControlManager reference is set
-            if (spawnManager != null)
-            {
-                // Trigger enemy spawning
-                spawnManager.StartEnemySpawning();
-            }
-
-            CheckInteraction();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            DataPersistenceManager.instance.SaveGame();
-            SceneManager.LoadSceneAsync("Main Menu");
-        }
-
-        if (DialogManager.isActive == true)
-        {
-            return;
-        }
+        HandlePauseInput();
 
         if (FlyingSlash.lemmeSlash == true)
         {
@@ -93,40 +76,109 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             return; // Exit the Update method
         }
 
-        if (AreaTransitions.inputDisable == true)
+        if (!isPaused && !DialogManager.isActive && !AreaTransitions.inputDisable)
         {
-            return;
-        }
-
-        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * speed * Time.fixedDeltaTime;
-
-        animator.SetFloat("moveX", rb.velocity.x);
-        animator.SetFloat("moveY", rb.velocity.y);
-
-
-        if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
-        {
-            animator.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
-            animator.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+            HandleMovement();
+            HandleInteraction();
         }
 
         if (isAttacking)
         {
-            
+
             rb.velocity = Vector2.zero;
             attackCountdown -= Time.deltaTime;
             if (attackCountdown < 0)
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
-                
+
             }
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             Attack();
-            
+        }
+    }
+
+    private void HandlePauseInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
+
+        if (isPaused)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MainMenu();
+            }
+            else if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Settings();
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ResumeGame();
+            }
+        }
+    }
+
+    private void TogglePause()
+    {
+        if (isPaused)
+        {
+            ResumeGame();
+        }
+        else
+        {
+            PauseGame();
+        }
+    }
+
+    private void PauseGame()
+    {
+        Debug.Log("Game paused");
+        isPaused = true;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.Pause();
+        }
+    }
+
+    private void ResumeGame()
+    {
+        Debug.Log("Game resumed");
+        isPaused = false;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.Resume();
+        }
+    }
+
+    private void HandleMovement()
+    {
+        Vector2 movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        rb.velocity = movement * speed * Time.fixedDeltaTime;
+        animator.SetFloat("moveX", rb.velocity.x);
+        animator.SetFloat("moveY", rb.velocity.y);
+
+        if (movement.magnitude > 0)
+        {
+            animator.SetFloat("lastMoveX", movement.x);
+            animator.SetFloat("lastMoveY", movement.y);
+        }
+    }
+
+    private void HandleInteraction()
+    {
+        if (Input.GetKeyDown(KeyCode.F) && spawnManager != null)
+        {
+            spawnManager.StartEnemySpawning();
+            CheckInteraction();
         }
     }
 
@@ -220,6 +272,32 @@ public class WarriorController : MonoBehaviour, IDataPersistence
                     return;
                 }
             }
+        }
+    }
+
+    private void MainMenu()
+    {
+        /*if (isPaused)
+        {
+            DataPersistenceManager.instance.SaveGame();
+            SceneManager.LoadScene("Main Menu");
+            ResumeGame(); // Ensure game resumes after returning to main menu
+        }*/
+        isPaused = false;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.MainMenu();
+        }
+    }
+
+    private void Settings()
+    {
+        isPaused = false;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.Settings();
         }
     }
 }

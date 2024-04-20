@@ -52,7 +52,7 @@ public class FlyingSlash : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             lemmeSlash = true;
-            
+
             Vector3 currentMousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
             Vector3 rotation = currentMousePos - transform.position;
             float rotateZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;

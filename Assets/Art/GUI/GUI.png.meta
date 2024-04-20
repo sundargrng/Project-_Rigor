@@ -249,7 +249,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: GUI_6
+      name: Pause_Button
       rect:
         serializedVersion: 2
         x: 167
@@ -2141,7 +2141,6 @@ TextureImporter:
       GUI_57: -634468908
       GUI_58: 17216877
       GUI_59: -753043988
-      GUI_6: -449466128
       GUI_60: -2071089079
       GUI_61: 58097323
       GUI_62: 28842366
@@ -2177,6 +2176,7 @@ TextureImporter:
       GUI_9: 1797246570
       GUI_90: 68261997
       GUI_92: 921819070
+      Pause_Button: -449466128
       empty: 1339624644
       helo_world: 1850240932
   mipmapLimitGroupName: 
