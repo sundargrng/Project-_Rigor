@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b218ba40ef730040bb14e7facd5538d, type: 3}
+  m_Name: Experience
+  m_EditorClassIdentifier: 
+  lootSprite: {fileID: 21300000, guid: deab0e19d9f2e344399d65be71364f01, type: 3}
+  lootName: ExpGain
+  dropChance: 100
+  healthRestoreAmount: 0
+  expGainAmount: 1000
+  healthMinusAmount: 0

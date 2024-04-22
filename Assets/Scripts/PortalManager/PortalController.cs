@@ -22,6 +22,9 @@ public class PortalController : MonoBehaviour
 
     public Rigidbody2D pRB;
 
+    public MusicType newAreaBGM; // New field to specify the BGM for the new area
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +67,9 @@ public class PortalController : MonoBehaviour
             camController.target = other.transform;
 
             other.transform.position = destination.transform.position;
+
+            // Play new area background music
+            SoundManager.PlayMusic(newAreaBGM);
 
             // Fade out black screen after camera transition
             StartCoroutine(FadeOutBlackScreen());

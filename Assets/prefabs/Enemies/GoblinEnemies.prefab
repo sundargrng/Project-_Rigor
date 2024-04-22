@@ -628,7 +628,7 @@ MonoBehaviour:
   speed: 1
   stoneAnimTime: 1.5
   slingShotRange: {fileID: 720426363117792563}
-  lineOfSite: 6
+  lineOfSite: 20
   attackRange: 2.5
   interactPoint: {fileID: 0}
   interactRadius: 0
@@ -739,6 +739,7 @@ MonoBehaviour:
   lootList:
   - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
   - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
+  - {fileID: 11400000, guid: df1d151c77462804e947483d806db9a7, type: 2}
   dropForce: 300
 --- !u!1 &8288418072111328784
 GameObject:
@@ -806,8 +807,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.4187, y: -0.6676, z: 0}
-    m_Extent: {x: 1.1721001, y: 0.95419997, z: 0}
+    m_Center: {x: 0.42769998, y: -0.6621, z: 0}
+    m_Extent: {x: 1.1747999, y: 0.9651, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

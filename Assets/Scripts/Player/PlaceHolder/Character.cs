@@ -8,9 +8,12 @@ public class Character : MonoBehaviour, IDataPersistence
 
     private HealthManager playerHealth;
 
+    private WarriorController player;
+
     private void Start()
     {
         playerHealth = FindObjectOfType<HealthManager>();
+        player = FindObjectOfType<WarriorController>();
     }
 
     private void Awake()
@@ -71,6 +74,8 @@ public class Character : MonoBehaviour, IDataPersistence
     {
         // Increment current level
         currentLevel++;
+
+        player.playerDamage += 10;
 
         // Increase max health
         playerHealth.maxHealth += 5;

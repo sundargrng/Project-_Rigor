@@ -7,16 +7,35 @@ public class LootCollision : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!collected && other.CompareTag("Player")) // Check if not already collected and collides with player
+        if (collected || loot == null || !other.CompareTag("Player"))
         {
-            HealthManager healthManager = other.GetComponent<HealthManager>();
-            if (healthManager != null)
+            return; // Exit early if already collected or invalid collision
+        }
+
+        HealthManager healthManager = other.GetComponent<HealthManager>();
+        if (healthManager != null)
+        {
+            if (loot.healthRestoreAmount > 0)
             {
                 healthManager.RestoreHealth(loot);
-                collected = true; // Mark the loot as collected
-                Debug.Log("Health Restored");
-                Destroy(gameObject); // Destroy the loot item when collected
+                Debug.Log("Health Restored: " + loot.healthRestoreAmount);
+            }
+
+            if (loot.healthMinusAmount > 0)
+            {
+                healthManager.ReduceHealth(loot.healthMinusAmount);
+                Debug.Log("Health Reduced: " + loot.healthMinusAmount);
             }
         }
+
+        // Check if ExperienceManager.Instance is not null and loot.expGainAmount is positive
+        if (ExperienceManager.Instance != null && loot.expGainAmount > 0 && loot != null)
+        {
+            ExperienceManager.Instance.AddExperience(loot.expGainAmount);
+            Debug.Log("Experience Gained: " + loot.expGainAmount);
+        }
+
+        collected = true; // Mark the loot as collected
+        Destroy(gameObject); // Destroy the loot item when collected
     }
 }

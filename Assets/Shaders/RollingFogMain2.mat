@@ -38,7 +38,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _FogSize: 1
+    - _FogSize: 0.5
     m_Colors:
-    - _FogSpeed: {r: 1, g: 0, b: 0, a: 0}
+    - _FogColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    - _FogSpeed: {r: 4, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

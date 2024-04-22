@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour, IDataPersistence
         healthManager = FindObjectOfType<HealthManager>();
         playerStat = FindObjectOfType<Character>();
         keyCountText.gameObject.SetActive(false); // Initially hide the key count UI
+        enemiesDefeatedText.gameObject.SetActive(false); // Initially hide the enemies defeated UI
 
         // Initialize enemies defeated text
         UpdateEnemiesDefeatedText();
@@ -121,5 +122,11 @@ public class UIManager : MonoBehaviour, IDataPersistence
         // Add logic to disable the specific barrier GameObject
         // Example: specificBarrier.SetActive(false);
         Debug.Log("Barrier disabled after defeating " + enemiesToDisableBarrier + " enemies.");
+    }
+
+    // Public method to show enemies defeated text (called by EnemySpawnerActivator)
+    public void ShowEnemiesDefeatedText()
+    {
+        enemiesDefeatedText.gameObject.SetActive(true);
     }
 }

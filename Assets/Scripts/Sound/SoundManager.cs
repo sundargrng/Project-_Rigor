@@ -23,6 +23,17 @@ public enum MusicType
 {
     BACKGROUND_MUSIC_1,
     BACKGROUND_MUSIC_2,
+    AREA_1,
+    AREA_2,
+    AREA_3,
+    AREA_4,
+    ENEMIES_SPAWNNED,
+}
+
+public enum AreaSound
+{
+    RAIN,
+    FOREST,
 }
 
 [RequireComponent(typeof(AudioSource))]
@@ -32,6 +43,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource audioSource;
     [SerializeField] private AudioClip[] soundList;
     [SerializeField] private AudioClip[] musicList;
+    [SerializeField] private AudioClip[] areaSoundList;
 
     private void Awake()
     {
@@ -94,6 +106,36 @@ public class SoundManager : MonoBehaviour
     }
 
     public static void StopMusic()
+    {
+        if (instance != null && instance.audioSource != null && instance.audioSource.isPlaying)
+        {
+            instance.audioSource.Stop();
+        }
+    }
+
+    public static void PlayAreaSound(AreaSound areaType, float volume = 1)
+    {
+        if (instance == null || instance.audioSource == null)
+        {
+            Debug.LogError("SoundManager instance or AudioSource is null.");
+            return;
+        }
+
+        int areaIndex = (int)areaType;
+        if (areaIndex < instance.areaSoundList.Length && instance.areaSoundList[areaIndex] != null)
+        {
+            instance.audioSource.clip = instance.areaSoundList[areaIndex];
+            instance.audioSource.volume = volume;
+            instance.audioSource.loop = true;
+            instance.audioSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning("AreaType " + areaType.ToString() + " is not assigned or is out of bounds.");
+        }
+    }
+
+    public static void StopAreaSound()
     {
         if (instance != null && instance.audioSource != null && instance.audioSource.isPlaying)
         {

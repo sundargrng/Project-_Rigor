@@ -38,9 +38,18 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private bool isPaused = false;
 
+    [SerializeField] private float dashSpeed = 10f;
+    [SerializeField] private float dashDuration = 1f;
+    [SerializeField] private float dashCooldown = 1f;
+    [SerializeField] private TrailRenderer tr;
+    private bool isDashing;
+    private bool canDash = true;
+
     // Start is called before the first frame update
     void Start()
     {
+        canDash = true;
+
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -62,44 +71,67 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
+
         HandlePauseInput();
 
-        if (FlyingSlash.lemmeSlash == true)
+        /*if (FlyingSlash.lemmeSlash == true && DialogManager.isActive == true)
         {
             // If LeftShift is pressed, prevent the player from moving
             rb.velocity = Vector2.zero;
             animator.SetFloat("moveX", 0);
             animator.SetFloat("moveY", 0);
             return; // Exit the Update method
-        }
+        }*/
 
         if (!isPaused && !DialogManager.isActive && !AreaTransitions.inputDisable)
         {
+            if (FlyingSlash.lemmeSlash == true)
+            {
+                // If LeftShift is pressed, prevent the player from moving
+                rb.velocity = Vector2.zero;
+                animator.SetFloat("moveX", 0);
+                animator.SetFloat("moveY", 0);
+                return; // Exit the Update method
+            }
+
             HandleMovement();
             HandleInteraction();
         }
 
         if (isAttacking)
         {
-
             rb.velocity = Vector2.zero;
             attackCountdown -= Time.deltaTime;
             if (attackCountdown < 0)
             {
                 animator.SetBool("isAttacking", false);
                 isAttacking = false;
-
             }
         }
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
+            if (DialogManager.isActive == true)
+            {
+                return; // Exit the Update method
+            }
+
             Attack();
         }
+
+        // Check for dash input and cooldown status
+        if ((Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.C)) && canDash)
+        {
+            StartCoroutine(HandleDash());
+        }
     }
+
 
     private void HandlePauseInput()
     {
@@ -172,6 +204,78 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             animator.SetFloat("lastMoveY", movement.y);
         }
     }
+
+    private IEnumerator HandleDash()
+    {
+        if (isDashing || !canDash)
+            yield break;
+
+        isDashing = true;
+        canDash = false;
+
+        // Determine dash direction based on last movement
+        Vector2 dashDir = new Vector2(animator.GetFloat("lastMoveX"), animator.GetFloat("lastMoveY")).normalized;
+
+        // If no prior movement, dash in the current facing direction
+        if (dashDir.magnitude == 0)
+        {
+            dashDir = new Vector2(animator.GetFloat("moveX"), animator.GetFloat("moveY")).normalized;
+        }
+        tr.emitting = true;
+
+        // Store original color and reduce alpha during dash
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        Color originalColor = spriteRenderer.color;
+        Color dashColor = originalColor;
+        dashColor.a = 0.5f; // Set alpha to 0.5 (50% transparency) during dash
+        spriteRenderer.color = dashColor;
+
+        // Set dashX and dashY parameters for dash animation
+        animator.SetBool("dashing", true);
+        animator.SetFloat("dashX", dashDir.x);
+        animator.SetFloat("dashY", dashDir.y);
+
+        // Dash duration timer
+        float dashTimer = 0f;
+
+        bool hasDamagedEnemies = false; // Flag to track if enemies have been damaged during this dash
+
+        while (dashTimer < dashDuration)
+        {
+            Vector2 dashPosition = rb.position + dashDir * dashSpeed * Time.deltaTime;
+
+            // Perform overlap detection to find enemies hit during dash
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(dashPosition, AttackPointRadius, enemies);
+
+            foreach (Collider2D enemyCollider in hitEnemies)
+            {
+                EnemyHealthManager enemyHealth = enemyCollider.GetComponent<EnemyHealthManager>();
+                if (enemyHealth != null && !hasDamagedEnemies)
+                {
+                    enemyHealth.TakeDamage(playerDamage);
+                    hasDamagedEnemies = true; // Set flag to true once damage is applied
+                }
+            }
+
+            dashTimer += Time.deltaTime;
+            rb.velocity = dashDir * dashSpeed;
+            yield return null;
+        }
+
+        // Reset movement animation parameters to dash direction
+        animator.SetBool("dashing", false);
+        animator.SetFloat("moveX", dashDir.x);
+        animator.SetFloat("moveY", dashDir.y);
+        isDashing = false;
+        tr.emitting = false;
+
+        // Restore original color after dash
+        spriteRenderer.color = originalColor;
+
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
 
     private void HandleInteraction()
     {

@@ -12,23 +12,18 @@ public class AreaTransitions : MonoBehaviour
     public Vector3 movePlayer;
 
     public Image fadeImage;
-
     public float newCamSize;
 
     private bool inTransition = false;
-
     public static bool inputDisable = false;
-
     public Rigidbody2D pRB;
 
-    // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         camController = Camera.main.GetComponent<CameraController>();
-        fadeImage = GameObject.Find("FadeImage").GetComponent<Image>(); // Update "FadeImage" with the name of your image object
+        fadeImage = GameObject.Find("FadeImage").GetComponent<Image>();
 
-        // Find the GameObject with the "Player" tag and get its Animator component
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
@@ -40,18 +35,11 @@ public class AreaTransitions : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player" && !inTransition)
         {
             inTransition = true;
-
             inputDisable = true;
             pRB.velocity = Vector3.zero;
 
@@ -62,14 +50,10 @@ public class AreaTransitions : MonoBehaviour
             // Perform camera transition
             camController.minPosition = newCamMinPos;
             camController.maxPosition = newCamMaxPos;
-
             cam.orthographicSize = newCamSize;
-
-            
 
             // Move player to new area
             other.transform.position += movePlayer;
-
             camController.target = other.transform;
 
             // Fade out black screen after camera transition
@@ -77,15 +61,16 @@ public class AreaTransitions : MonoBehaviour
         }
     }
 
-    IEnumerator FadeOutBlackScreen()
+    private IEnumerator FadeOutBlackScreen()
     {
-        // Wait for camera transition and player movement to complete
         yield return new WaitForSeconds(2f);
+
+        // Fade out the black screen
         fadeImage.color = new Color(0, 0, 0, 0);
         LeanTween.alpha(fadeImage.rectTransform, 0f, 0.5f);
-        inTransition = false;
 
+        // Reset transition state
+        inTransition = false;
         inputDisable = false;
-        
     }
 }

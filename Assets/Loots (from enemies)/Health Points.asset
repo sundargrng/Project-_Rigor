@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b218ba40ef730040bb14e7facd5538d, type: 3}
   m_Name: Health Points
   m_EditorClassIdentifier: 
-  lootSprite: {fileID: 21300000, guid: 8694c14bf03e1bd45b8cf5ccac7c1eb4, type: 3}
+  lootSprite: {fileID: -1406052230, guid: 82fba50bc2a1f114280e610dad32ab47, type: 3}
   lootName: healthPoints
-  dropChance: 100
-  healthRestoreAmount: 4
+  dropChance: 5
+  healthRestoreAmount: 6
+  expGainAmount: 0
+  healthMinusAmount: 0

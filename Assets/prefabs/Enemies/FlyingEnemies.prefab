@@ -702,6 +702,7 @@ MonoBehaviour:
   lootList:
   - {fileID: 11400000, guid: ea29c55eaf943464b89d6f39103ed26f, type: 2}
   - {fileID: 11400000, guid: fee3ed6eaf302c5488e7b76f026b8750, type: 2}
+  - {fileID: 11400000, guid: df1d151c77462804e947483d806db9a7, type: 2}
   dropForce: 300
 --- !u!1 &6118723222003607871
 GameObject:

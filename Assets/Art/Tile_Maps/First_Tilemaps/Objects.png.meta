@@ -1299,7 +1299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Objects_56
+      name: 1_crystal
       rect:
         serializedVersion: 2
         x: 754
@@ -1992,7 +1992,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Objects_89
+      name: 3_Bone
       rect:
         serializedVersion: 2
         x: 456
@@ -2748,7 +2748,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Objects_125
+      name: 2_crystal
       rect:
         serializedVersion: 2
         x: 580
@@ -4858,6 +4858,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      1_crystal: -1987159798
+      2_crystal: 865924706
+      3_Bone: 933401821
       Objects_0: 1850741461
       Objects_1: -1885631446
       Objects_10: -761848130
@@ -4887,7 +4890,6 @@ TextureImporter:
       Objects_122: 1329035596
       Objects_123: -1574283622
       Objects_124: 143497213
-      Objects_125: 865924706
       Objects_126: -677620975
       Objects_127: 401940136
       Objects_128: 258383376
@@ -5034,7 +5036,6 @@ TextureImporter:
       Objects_53: -199247974
       Objects_54: 2112379491
       Objects_55: 885409828
-      Objects_56: -1987159798
       Objects_57: -474774989
       Objects_58: 1065772052
       Objects_59: -1701759294
@@ -5070,7 +5071,6 @@ TextureImporter:
       Objects_86: -776052521
       Objects_87: 1598635239
       Objects_88: 50957854
-      Objects_89: 933401821
       Objects_9: -301337774
       Objects_90: 1081990129
       Objects_91: -185369221

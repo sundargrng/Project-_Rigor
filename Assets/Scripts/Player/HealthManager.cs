@@ -83,4 +83,9 @@ public class HealthManager : MonoBehaviour, IDataPersistence
             currentHealth += amountToHeal;
         }
     }
+
+    public void ReduceHealth(int amount)
+    {
+        currentHealth -= amount;
+    }
 }
