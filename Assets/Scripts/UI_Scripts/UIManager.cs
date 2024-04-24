@@ -18,9 +18,6 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public Text deathCountText; // Text element to display death count
     private int deathCount = 0; // Variable to store death count
 
-    public Text keyCountText; // Text element to display key count
-    private int keyCount = 0; // Variable to store key count
-
     public Text enemiesDefeatedText; // Text element to display defeated enemies count
     public int enemiesToDisableBarrier = 15; // Number of enemies needed to disable the barrier
     private int enemiesDefeated = 0; // Variable to store defeated enemies count
@@ -32,7 +29,6 @@ public class UIManager : MonoBehaviour, IDataPersistence
     {
         healthManager = FindObjectOfType<HealthManager>();
         playerStat = FindObjectOfType<Character>();
-        keyCountText.gameObject.SetActive(false); // Initially hide the key count UI
         enemiesDefeatedText.gameObject.SetActive(false); // Initially hide the enemies defeated UI
 
         // Initialize enemies defeated text
@@ -56,21 +52,6 @@ public class UIManager : MonoBehaviour, IDataPersistence
 
         // Update death count text
         deathCountText.text = "Deaths: " + deathCount;
-
-        // Check if the current scene is "Scene2"
-        if (SceneManager.GetActiveScene().name == "level1")
-        {
-            // Show the key count UI
-            keyCountText.gameObject.SetActive(true);
-
-            // Update key count text
-            keyCountText.text = "Keys: " + keyCount;
-        }
-        else
-        {
-            // Hide the key count UI if not in "Scene2"
-            keyCountText.gameObject.SetActive(false);
-        }
     }
 
     public void LoadData(GameData data)
@@ -89,24 +70,19 @@ public class UIManager : MonoBehaviour, IDataPersistence
     {
         deathCount++;
     }
-
-    public void IncrementKeyCount()
-    {
-        keyCount++;
-    }
-
     // Method to increment defeated enemies count
     public void IncrementEnemiesDefeated()
     {
-        enemiesDefeated++;
-        UpdateEnemiesDefeatedText();
-
-        // Check if enough enemies have been defeated to disable the barrier
-        if (enemiesDefeated >= enemiesToDisableBarrier)
+        if(EnemySpawnerActivator.hasStarted == true)
         {
-            enemiesDefeatedText.gameObject.SetActive(false); // Disable the UI text element
-            // Call method to disable the barrier (implement this method)
-            DisableSpecificBarrier();
+            enemiesDefeated++;
+            UpdateEnemiesDefeatedText();
+
+            // Check if enough enemies have been defeated to disable the barrier
+            if (enemiesDefeated >= enemiesToDisableBarrier)
+            {
+                enemiesDefeatedText.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -114,19 +90,5 @@ public class UIManager : MonoBehaviour, IDataPersistence
     private void UpdateEnemiesDefeatedText()
     {
         enemiesDefeatedText.text = "Enemies Defeated: " + enemiesDefeated + " / " + enemiesToDisableBarrier;
-    }
-
-    // Method to disable the specific barrier (implement this method)
-    private void DisableSpecificBarrier()
-    {
-        // Add logic to disable the specific barrier GameObject
-        // Example: specificBarrier.SetActive(false);
-        Debug.Log("Barrier disabled after defeating " + enemiesToDisableBarrier + " enemies.");
-    }
-
-    // Public method to show enemies defeated text (called by EnemySpawnerActivator)
-    public void ShowEnemiesDefeatedText()
-    {
-        enemiesDefeatedText.gameObject.SetActive(true);
     }
 }

@@ -51,6 +51,7 @@ public class FireBall : MonoBehaviour
             if (playerHealth != null)
             {
                 SoundManager.PlaySound(SoundType.FIREHURT);
+                Debug.Log("FIREHURT sound played");
                 playerHealth.damagePlayer(fireDamage);
             }
         }
