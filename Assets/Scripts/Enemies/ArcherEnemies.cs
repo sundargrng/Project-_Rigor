@@ -96,7 +96,7 @@ public class ArcherEnemies : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, targetPatrolPoint, speed * Time.deltaTime);
 
                     // Check if reached the current patrol point
-                    if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.1f)
+                    if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.5f)
                     {
                         // Start waiting at patrol point
                         StartCoroutine(WaitAtPatrolPoint());

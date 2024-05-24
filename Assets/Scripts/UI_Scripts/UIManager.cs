@@ -18,10 +18,6 @@ public class UIManager : MonoBehaviour, IDataPersistence
     public Text deathCountText; // Text element to display death count
     private int deathCount = 0; // Variable to store death count
 
-    public Text enemiesDefeatedText; // Text element to display defeated enemies count
-    public int enemiesToDisableBarrier = 15; // Number of enemies needed to disable the barrier
-    private int enemiesDefeated = 0; // Variable to store defeated enemies count
-
     private SaveSlot saveSlot;
 
     // Start is called before the first frame update
@@ -29,10 +25,6 @@ public class UIManager : MonoBehaviour, IDataPersistence
     {
         healthManager = FindObjectOfType<HealthManager>();
         playerStat = FindObjectOfType<Character>();
-        enemiesDefeatedText.gameObject.SetActive(false); // Initially hide the enemies defeated UI
-
-        // Initialize enemies defeated text
-        UpdateEnemiesDefeatedText();
     }
 
     // Update is called once per frame
@@ -70,25 +62,5 @@ public class UIManager : MonoBehaviour, IDataPersistence
     {
         deathCount++;
     }
-    // Method to increment defeated enemies count
-    public void IncrementEnemiesDefeated()
-    {
-        if(EnemySpawnerActivator.hasStarted == true)
-        {
-            enemiesDefeated++;
-            UpdateEnemiesDefeatedText();
-
-            // Check if enough enemies have been defeated to disable the barrier
-            if (enemiesDefeated >= enemiesToDisableBarrier)
-            {
-                enemiesDefeatedText.gameObject.SetActive(false);
-            }
-        }
-    }
-
-    // Method to update defeated enemies text
-    private void UpdateEnemiesDefeatedText()
-    {
-        enemiesDefeatedText.text = "Enemies Defeated: " + enemiesDefeated + " / " + enemiesToDisableBarrier;
-    }
+    
 }

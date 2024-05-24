@@ -29,8 +29,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private Vector2 boxSize = new Vector2(0.1f, 1f);
 
-    [SerializeField] private SpawnControlManager spawnManager;
-
     public float knockbackForce = 200f;
 
     // Reference to the PauseMenuScript (assigned in the Unity Editor)
@@ -64,11 +62,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             interactIcon.gameObject.SetActive(false);
         }
 
-        // Find and assign SpawnControlManager if not already assigned
-        if (spawnManager == null)
-        {
-            spawnManager = FindObjectOfType<SpawnControlManager>();
-        }
     }
 
     void Update()
@@ -89,7 +82,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             return; // Exit the Update method
         }*/
 
-        if (!isPaused && !DialogManager.isActive && !AreaTransitions.inputDisable)
+        if (!DialogManager.isActive && !AreaTransitions.inputDisable)
         {
             if (FlyingSlash.lemmeSlash == true)
             {
@@ -135,7 +128,7 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private void HandlePauseInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             TogglePause();
         }
@@ -153,6 +146,10 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 ResumeGame();
+            }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CloseMenu();
             }
         }
     }
@@ -178,6 +175,22 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         {
             pauseMenuScript.Pause();
         }
+    }
+
+    private void CloseMenu()
+    {
+        Debug.Log("Pause Menu Closed");
+        isPaused = false;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.Resume();
+        }
+    }
+
+    public void ReturnPauseMenu()
+    {
+        isPaused = true;
     }
 
     private void ResumeGame()
@@ -279,9 +292,8 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private void HandleInteraction()
     {
-        if (Input.GetKeyDown(KeyCode.F) && spawnManager != null)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            spawnManager.StartEnemySpawning();
             CheckInteraction();
         }
     }
@@ -325,7 +337,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         StartCoroutine(AttackWithDelay());
     }
 
-
     public void LoadData(GameData data)
     {
         this.transform.position = data.playerPosition;
@@ -352,7 +363,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         }
     }
 
-
     public void CloseInteractableIcon()
     {
         if (interactIcon != null)
@@ -360,7 +370,6 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             interactIcon.gameObject.SetActive(false);
         }
     }
-
 
     private void CheckInteraction()
     {

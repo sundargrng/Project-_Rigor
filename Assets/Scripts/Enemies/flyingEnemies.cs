@@ -40,6 +40,7 @@ public class flyingEnemies : MonoBehaviour
         animator = GetComponent<Animator>();
         targetPoint = 0;
         rb = GetComponent<Rigidbody2D>();
+        Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Grid"));
     }
 
     void Update()
@@ -102,7 +103,7 @@ public class flyingEnemies : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, targetPatrolPoint, speed * Time.deltaTime);
 
                     // Check if reached the current patrol point
-                    if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.1f)
+                    if (Vector2.Distance(transform.position, targetPatrolPoint) < 0.8f)
                     {
                         // Start waiting at patrol point
                         StartCoroutine(WaitAtPatrolPoint());

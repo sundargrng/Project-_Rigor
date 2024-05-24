@@ -10,6 +10,8 @@ public class Character : MonoBehaviour, IDataPersistence
 
     private WarriorController player;
 
+    public GameObject exp_Up;
+
     private void Start()
     {
         playerHealth = FindObjectOfType<HealthManager>();
@@ -83,11 +85,16 @@ public class Character : MonoBehaviour, IDataPersistence
         // Reset current health to max health
         playerHealth.currentHealth = playerHealth.maxHealth;
 
-        //When player level ups, current experience resets to zero
-        currentExperience = 0;
+        exp_Up.SetActive(true);
+        SoundManager.PlaySound(SoundType.LEVELUPSOUND);
+        StartCoroutine(WaitForExp_Up());
+    }
 
-        // Update max experience for next level
-        maxExperience += 100;
+    private IEnumerator WaitForExp_Up()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        exp_Up.SetActive(false);
     }
 
     public void LoadData(GameData data)

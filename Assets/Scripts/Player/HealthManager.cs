@@ -9,7 +9,6 @@ public class HealthManager : MonoBehaviour, IDataPersistence
 
     private bool hurtFlash;
 
-
     [SerializeField] private float flashDuration = 0.2f;
     [SerializeField] private Color flashColor = new Color(1f, 0f, 0f, 0.5f);
 
@@ -17,6 +16,10 @@ public class HealthManager : MonoBehaviour, IDataPersistence
     private Rigidbody2D rb; // Reference to the Rigidbody2D component
 
     private Animator playerAnim;
+
+    public GameManager gameManager;
+
+    private bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,9 +38,11 @@ public class HealthManager : MonoBehaviour, IDataPersistence
     public void damagePlayer(int damageTaken)
     {
         currentHealth -= damageTaken;
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
+            isDead = true;
             playerAnim.SetTrigger("death");
+            gameManager.GameOver();
             FindObjectOfType<UIManager>()?.IncrementDeathCount(); // Increment death count
         }
 

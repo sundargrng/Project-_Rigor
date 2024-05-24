@@ -1,15 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuScript : MonoBehaviour, IDataPersistence
 {
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject settingsPanel;
+    [SerializeField] private WarriorController warriorController;
+
+    private bool inSettingsMenu = false;
 
     private void Start()
     {
         pauseMenu.SetActive(false);
+        settingsPanel.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (inSettingsMenu && Input.GetKeyDown(KeyCode.Space))
+        {
+            inSettingsMenu = false;
+            settingsPanel.SetActive(false);
+            warriorController.ReturnPauseMenu();
+        }
     }
 
     public void Pause()
@@ -28,20 +42,43 @@ public class PauseMenuScript : MonoBehaviour, IDataPersistence
 
     public void Settings()
     {
-        // Implement your settings logic here
-        Debug.Log("Settings opened");
+        if (Time.timeScale == 0)
+        {
+            settingsPanel.SetActive(true);
+            inSettingsMenu = true;
+        }
     }
 
     public void Resume()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
+        inSettingsMenu = false;
+        settingsPanel.SetActive(false);
     }
 
-    public void CloseMenu()
+    /*public void CloseMenu()
     {
         pauseMenu.SetActive(false);
         Time.timeScale = 1;
+        inSettingsMenu = false;
+
+        Resume();
+    }*/
+
+    public void SaveGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+        DataPersistenceManager.instance.SaveGame();
+        Debug.Log("GAMESAVED. . .");
+    }
+
+    public void Quit()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;
+        Application.Quit();
     }
 
     // Implementing IDataPersistence interface methods
@@ -54,5 +91,4 @@ public class PauseMenuScript : MonoBehaviour, IDataPersistence
     {
         // Implement saving logic here if needed
     }
-
 }

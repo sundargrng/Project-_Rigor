@@ -91,7 +91,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         {
             Die();
         }
-    } 
+    }
 
     public void TakeDamage(int damage)
     {
@@ -181,11 +181,6 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
         
         ExperienceManager.Instance.AddExperience(expAmount);
 
-        // Notify UIManager of defeated enemy
-        if (uiManager != null)
-        {
-            uiManager.IncrementEnemiesDefeated();
-        }
     }
 
     public void LoadData(GameData data)

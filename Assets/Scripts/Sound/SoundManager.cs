@@ -16,6 +16,7 @@ public enum SoundType
     ENEMYDEATH,
     SLASHDAMAGE,
     SWORDDAMAGE,
+    LEVELUPSOUND,
     FOOTSTEP
 }
 
