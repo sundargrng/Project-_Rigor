@@ -2,8 +2,19 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
-public class Openable : Interactable
+public class Openable : Interactable, IDataPersistence
 {
+    [SerializeField] private string id;
+
+    [ContextMenu("Generate guid for id")]
+
+    private void GenerateGuid()
+    {
+        id = System.Guid.NewGuid().ToString();
+    }
+
+    private bool opened = false;
+
     public Sprite openSprite;
     public Sprite closedSprite;
 
@@ -50,7 +61,9 @@ public class Openable : Interactable
             LootBag lootBag = GetComponent<LootBag>();
             if (lootBag != null)
             {
+                opened = true;
                 lootBag.SpawnLoot(transform.position);
+                this.gameObject.SetActive(false);
             }
         }
     }
@@ -59,5 +72,23 @@ public class Openable : Interactable
     {
         spriteRenderer.sprite = closedSprite;
         isOpen = false;
+    }
+
+    public void LoadData(GameData data)
+    {
+        data.chestOpened.TryGetValue(id, out opened);
+        if (opened)
+        {
+            this.gameObject.SetActive(false);
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        if (data.chestOpened.ContainsKey(id))
+        {
+            data.chestOpened.Remove(id);
+        }
+        data.chestOpened.Add(id, opened);
     }
 }

@@ -49,6 +49,8 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
     // Reference to UIManager
     private UIManager uiManager;
 
+    private TrapTypeChest trapTypeChest;
+
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +67,8 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
         // Find UIManager in the scene
         uiManager = FindObjectOfType<UIManager>();
+
+        trapTypeChest = GameObject.FindGameObjectWithTag("TrapChest").GetComponent<TrapTypeChest>();
     }
 
     // Update is called once per frame
@@ -150,6 +154,7 @@ public class EnemyHealthManager : MonoBehaviour, IDataPersistence
 
     public void Die()
     {
+        trapTypeChest.OnEnemyKilled();
         //healthBar.gameObject.SetActive(false);
         GetComponent<LootBag>().SpawnLoot(transform.position);
         deadFr = true;

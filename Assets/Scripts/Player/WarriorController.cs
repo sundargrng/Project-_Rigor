@@ -43,6 +43,8 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     private bool isDashing;
     private bool canDash = true;
 
+    public bool disableInteraction = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -135,11 +137,11 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
         if (isPaused)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.M))
             {
                 MainMenu();
             }
-            else if (Input.GetKeyDown(KeyCode.Q))
+            else if (Input.GetKeyDown(KeyCode.N))
             {
                 Settings();
             }
@@ -147,9 +149,13 @@ public class WarriorController : MonoBehaviour, IDataPersistence
             {
                 ResumeGame();
             }
+            else if (Input.GetKeyDown(KeyCode.B))
+            {
+                SaveGame();
+            }
             else if (Input.GetKeyDown(KeyCode.Escape))
             {
-                CloseMenu();
+                QuitGame();
             }
         }
     }
@@ -177,14 +183,25 @@ public class WarriorController : MonoBehaviour, IDataPersistence
         }
     }
 
-    private void CloseMenu()
+    private void SaveGame()
+    {
+        Debug.Log("Game paused");
+        isPaused = true;
+
+        if (pauseMenuScript != null)
+        {
+            pauseMenuScript.SaveGame();
+        }
+    }
+
+    private void QuitGame()
     {
         Debug.Log("Pause Menu Closed");
         isPaused = false;
 
         if (pauseMenuScript != null)
         {
-            pauseMenuScript.Resume();
+            pauseMenuScript.Quit();
         }
     }
 
@@ -268,6 +285,13 @@ public class WarriorController : MonoBehaviour, IDataPersistence
                     enemyHealth.TakeDamage(playerDamage);
                     hasDamagedEnemies = true; // Set flag to true once damage is applied
                 }
+
+                BossHealthManager bossHealth = enemyCollider.GetComponent<BossHealthManager>();
+                if (bossHealth != null && !hasDamagedEnemies)
+                {
+                    bossHealth.TakeDamage(playerDamage);
+                    hasDamagedEnemies = true; // Set flag to true once damage is applied
+                }
             }
 
             dashTimer += Time.deltaTime;
@@ -292,9 +316,12 @@ public class WarriorController : MonoBehaviour, IDataPersistence
 
     private void HandleInteraction()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (!disableInteraction)
         {
-            CheckInteraction();
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                CheckInteraction();
+            }
         }
     }
 
@@ -340,11 +367,13 @@ public class WarriorController : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         this.transform.position = data.playerPosition;
+        this.playerDamage = data.currentDamage;
     }
 
     public void SaveData(GameData data)
     {
         data.playerPosition = this.transform.position;
+        data.currentDamage = this.playerDamage;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

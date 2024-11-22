@@ -22,7 +22,7 @@ public class slashFly : MonoBehaviour
         slashRB.velocity = new Vector2(direction.x, direction.y).normalized * speed;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 180);
-        Destroy(this.gameObject, 2);
+        Destroy(this.gameObject, 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -13,6 +13,7 @@ public class MainMenu : Menu
     [SerializeField] private Button newGameButton;
     [SerializeField] private Button ContinueButton;
     [SerializeField] private Button loadGameButton;
+    [SerializeField] private Button exitGameButton;
 
     private void Start()
     {
@@ -56,6 +57,11 @@ public class MainMenu : Menu
         DataPersistenceManager.instance.SaveGame();
 
         SceneManager.LoadSceneAsync("level1");
+    }
+
+    public void OnExitButtoClicked()
+    {
+        Application.Quit();
     }
 
     private void DisableMenuButtons()

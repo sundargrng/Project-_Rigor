@@ -67,6 +67,7 @@ public class LootBag : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.angularVelocity = 0f;
 
+                Destroy(lootGameObject, 3);
                 lootSpawned = true; // Mark loot as spawned
             }
         }

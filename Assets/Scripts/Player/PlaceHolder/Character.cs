@@ -16,6 +16,7 @@ public class Character : MonoBehaviour, IDataPersistence
     {
         playerHealth = FindObjectOfType<HealthManager>();
         player = FindObjectOfType<WarriorController>();
+        exp_Up.SetActive(false);
     }
 
     private void Awake()
@@ -85,12 +86,31 @@ public class Character : MonoBehaviour, IDataPersistence
         // Reset current health to max health
         playerHealth.currentHealth = playerHealth.maxHealth;
 
+        // Calculate excess experience
+        int excessExperience = currentExperience - maxExperience;
+
+        //When player level ups, current experience resets to zero
+        currentExperience = 0;
+
+        // Add excess experience to current experience
+        currentExperience += excessExperience;
+
+        // Update max experience for next level
+        maxExperience += 100;
+
+        // Check if there is still excess experience
+        if (currentExperience >= maxExperience)
+        {
+            // Call LevelUp() recursively to handle excess experience
+            LevelUp();
+        }
+
         exp_Up.SetActive(true);
         SoundManager.PlaySound(SoundType.LEVELUPSOUND);
         StartCoroutine(WaitForExp_Up());
     }
 
-    private IEnumerator WaitForExp_Up()
+    IEnumerator WaitForExp_Up()
     {
         yield return new WaitForSeconds(0.5f);
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lootSprite: {fileID: 21300000, guid: 3aae8238e99605945a9a6e27d87d4cb1, type: 3}
   lootName: HighExpGain
-  dropChance: 50
+  dropChance: 100
   healthRestoreAmount: 0
   expGainAmount: 5000
   healthMinusAmount: 0

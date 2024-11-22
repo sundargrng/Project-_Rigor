@@ -35,7 +35,6 @@ public class PauseMenuScript : MonoBehaviour, IDataPersistence
 
     public void MainMenu()
     {
-        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;
     }

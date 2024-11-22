@@ -23,6 +23,8 @@ public class BossController : MonoBehaviour
     private bool isDashPointActive; // Flag to track if dashPoint is active
     private bool isAttacking; // Flag to track if currently attacking
     private bool hasAppliedDashDamage; // Flag to track if dash damage has been applied
+    private bool isDead; // Flag to track if boss is dead
+    private bool isHealing; // Flag to track if boss is healing
 
     [Header("Boss Agro Attributes")]
     public int dashDamage;
@@ -39,7 +41,6 @@ public class BossController : MonoBehaviour
     private Rigidbody2D rb;
     private Collider2D dashPointCollider; // Reference to the dashPoint (child object) collider
     private Collider2D attackPointCollider; // Reference to the attackPoint (child object) collider
-
 
     private void Start()
     {
@@ -88,7 +89,7 @@ public class BossController : MonoBehaviour
 
     private void Update()
     {
-        if (player == null)
+        if (player == null || isDead || isHealing)
             return;
 
         float distanceFromPlayer = Vector2.Distance(player.position, transform.position);
@@ -257,7 +258,6 @@ public class BossController : MonoBehaviour
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (isDashPointActive && other.CompareTag("Player") && !hasAppliedDashDamage)
@@ -298,5 +298,30 @@ public class BossController : MonoBehaviour
         animator.SetBool("closeRange", false);
         animator.SetFloat("X2", direction.x);
         animator.SetFloat("Y2", direction.y);
+    }
+
+    public void OnBossDeath()
+    {
+        isDead = true;
+        rb.velocity = Vector2.zero; // Stop all movement
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isDashing", false);
+        animator.SetBool("closeRange", false);
+    }
+
+    public void OnBossHealing()
+    {
+        isHealing = true;
+        rb.velocity = Vector2.zero; // Stop all movement
+        animator.SetBool("isMoving", false);
+        animator.SetBool("isDashing", false);
+        animator.SetBool("closeRange", false);
+    }
+
+    public void OnHealingComplete()
+    {
+        isHealing = false;
+        speed += 2f; // Increase boss speed by 1f when healing is complete
+        dashRange -= 2f;
     }
 }

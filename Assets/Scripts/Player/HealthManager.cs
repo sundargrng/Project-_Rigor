@@ -40,13 +40,24 @@ public class HealthManager : MonoBehaviour, IDataPersistence
         currentHealth -= damageTaken;
         if (currentHealth <= 0 && !isDead)
         {
+            SoundManager.StopMusic();
+            SoundManager.PlaySound(SoundType.GAME_OVER_SOUND);
             isDead = true;
             playerAnim.SetTrigger("death");
-            gameManager.GameOver();
-            FindObjectOfType<UIManager>()?.IncrementDeathCount(); // Increment death count
+
+            StartCoroutine(DeathAnimationWait());
+
         }
 
         StartCoroutine(FlashEffect());
+    }
+
+    private IEnumerator DeathAnimationWait()
+    {
+        yield return new WaitForSeconds(1.4f);
+
+        gameManager.GameOver();
+        FindObjectOfType<UIManager>()?.IncrementDeathCount(); // Increment death count
     }
 
     private IEnumerator FlashEffect()

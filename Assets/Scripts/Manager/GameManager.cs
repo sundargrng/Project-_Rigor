@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         gameOverUi.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void mainMenu()
@@ -21,4 +22,5 @@ public class GameManager : MonoBehaviour
     {
         Application.Quit();
     }
+
 }

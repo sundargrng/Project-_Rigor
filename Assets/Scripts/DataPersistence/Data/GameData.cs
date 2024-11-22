@@ -10,6 +10,7 @@ public class GameData
     public int deathCount;
     public SerializableTypeDictionary<string, bool> enemiesDefeated;
     public SerializableTypeDictionary<string, bool> gameObjectives;
+    public SerializableTypeDictionary<string, bool> chestOpened;
     public Vector3 playerPosition;
 
     // Camera properties
@@ -24,6 +25,7 @@ public class GameData
     public int currentExperience;
     public int currentExperienceMax;
     public int currentLevel;
+    public int currentDamage;
 
     public bool isNPCDisabled;
 
@@ -36,6 +38,7 @@ public class GameData
         this.playerPosition = Vector3.zero;
         this.enemiesDefeated = new SerializableTypeDictionary<string, bool>();
         this.gameObjectives = new SerializableTypeDictionary<string, bool>();
+        this.chestOpened = new SerializableTypeDictionary<string, bool>();
 
         // Initialize camera properties
         this.cameraPosition = Vector3.zero;
@@ -49,6 +52,7 @@ public class GameData
         this.currentLevel = 1;
         this.currentExperience = 0;
         this.currentExperienceMax = 200;
+        this.currentDamage = 5;
 
         // Default background music for new area
         this.newAreaBGM = MusicType.AREA_1; // Set a default value
@@ -66,18 +70,30 @@ public class GameData
         }
 
         int totalObjectives = 0;
-        foreach (bool finished in gameObjectives.Values)
+        foreach (bool completed in gameObjectives.Values)
         {
-            if (finished)
+            if (completed)
             {
                 totalObjectives++;
             }
         }
 
-        int percentageCompleted = 0; // Default value in case enemiesDefeated is empty
-        if (enemiesDefeated.Count != 0 && gameObjectives.Count != 0)
+        int totalChestOpened = 0;
+        foreach(bool opened in chestOpened.Values)
         {
-            percentageCompleted = (((totalDefeated + totalObjectives) * 100) / (enemiesDefeated.Count + gameObjectives.Count));
+            if (opened)
+            {
+                totalChestOpened++;
+            }
+        }
+
+        int totalCompleted = totalDefeated + totalObjectives + totalChestOpened;
+        int totalCount = enemiesDefeated.Count + gameObjectives.Count + chestOpened.Count;
+
+        int percentageCompleted = 0; // Default value in case totalCount is 0
+        if (totalCount != 0)
+        {
+            percentageCompleted = totalCompleted * 100 / totalCount;
         }
         return percentageCompleted;
     }

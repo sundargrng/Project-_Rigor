@@ -338,7 +338,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 91058686}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1979942522}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnExitButtoClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &91058686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3608,6 +3620,7 @@ MonoBehaviour:
   newGameButton: {fileID: 1557808179}
   ContinueButton: {fileID: 86353719}
   loadGameButton: {fileID: 1916520673}
+  exitGameButton: {fileID: 91058685}
 --- !u!224 &1979942523
 RectTransform:
   m_ObjectHideFlags: 0

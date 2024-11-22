@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_0
+      name: close
       rect:
         serializedVersion: 2
         x: 2
@@ -186,7 +186,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_3
+      name: forest_close
       rect:
         serializedVersion: 2
         x: 97
@@ -312,7 +312,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_9
+      name: trap_close
       rect:
         serializedVersion: 2
         x: 290
@@ -648,7 +648,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_25
+      name: open
       rect:
         serializedVersion: 2
         x: 2
@@ -711,7 +711,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_28
+      name: forest_open
       rect:
         serializedVersion: 2
         x: 97
@@ -837,7 +837,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Fantasy RPG (Toony) 32x32_34
+      name: trap_open
       rect:
         serializedVersion: 2
         x: 290
@@ -1688,7 +1688,6 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       CLOSED_NORMAL: 1328291354
-      Fantasy RPG (Toony) 32x32_0: -491284484
       Fantasy RPG (Toony) 32x32_1: -1060176087
       Fantasy RPG (Toony) 32x32_10: 1954494277
       Fantasy RPG (Toony) 32x32_11: -1114165563
@@ -1706,17 +1705,13 @@ TextureImporter:
       Fantasy RPG (Toony) 32x32_22: 1054196239
       Fantasy RPG (Toony) 32x32_23: 387936648
       Fantasy RPG (Toony) 32x32_24: 507965352
-      Fantasy RPG (Toony) 32x32_25: 1370371303
       Fantasy RPG (Toony) 32x32_26: -59671964
       Fantasy RPG (Toony) 32x32_27: -1240837499
-      Fantasy RPG (Toony) 32x32_28: 73793438
       Fantasy RPG (Toony) 32x32_29: -13592387
-      Fantasy RPG (Toony) 32x32_3: 1194988932
       Fantasy RPG (Toony) 32x32_30: 938452094
       Fantasy RPG (Toony) 32x32_31: -1825113402
       Fantasy RPG (Toony) 32x32_32: -583610293
       Fantasy RPG (Toony) 32x32_33: 175243635
-      Fantasy RPG (Toony) 32x32_34: 832783836
       Fantasy RPG (Toony) 32x32_35: -308187786
       Fantasy RPG (Toony) 32x32_36: -238101388
       Fantasy RPG (Toony) 32x32_37: 1197830335
@@ -1759,8 +1754,13 @@ TextureImporter:
       Fantasy RPG (Toony) 32x32_72: 1331786540
       Fantasy RPG (Toony) 32x32_73: -1795171575
       Fantasy RPG (Toony) 32x32_8: 1141069910
-      Fantasy RPG (Toony) 32x32_9: -1150893481
       OPENED_NORMAL: -938815704
+      close: -491284484
+      forest_close: 1194988932
+      forest_open: 73793438
+      open: 1370371303
+      trap_close: -1150893481
+      trap_open: 832783836
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

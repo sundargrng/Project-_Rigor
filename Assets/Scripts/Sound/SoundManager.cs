@@ -17,6 +17,8 @@ public enum SoundType
     SLASHDAMAGE,
     SWORDDAMAGE,
     LEVELUPSOUND,
+    FINISH,
+    GAME_OVER_SOUND,
     FOOTSTEP
 }
 
@@ -33,8 +35,12 @@ public enum MusicType
 
 public enum AreaSound
 {
+    AREA_1,
+    AREA_2,
+    AREA_3,
     RAIN,
     FOREST,
+    DUNGEON,
 }
 
 [RequireComponent(typeof(AudioSource))]
